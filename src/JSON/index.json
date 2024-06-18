@@ -1,0 +1,130 @@
+{
+    "rowOne" :  [
+        {
+            "img" : "https://designrevision.com/demo/shards-dashboard-lite-react/static/media/1.ed986061.jpeg",
+            "titile": "NATURE",
+            "avatar": "https://airbnbnew.cybersoft.edu.vn/avatar/04-10-2023-09-08-33-01-3.jpg",
+            "bgColor" : "#212529" 
+    
+        },
+        {
+            "img" : "https://designrevision.com/demo/shards-dashboard-lite-react/static/media/2.780ccb41.jpeg",
+            "titile": "TRAVEL",
+            "avatar": "https://airbnbnew.cybersoft.edu.vn/avatar/04-10-2023-09-06-57-02-3.jpg",
+            "bgColor" : "#00b8d8"
+    
+        },
+        {
+            "img" : "https://designrevision.com/demo/shards-dashboard-lite-react/static/media/3.41bf3241.jpeg",
+            "titile": "TECHNOLOGY",
+            "avatar": "https://airbnbnew.cybersoft.edu.vn/avatar/04-10-2023-09-09-57-03-3.jpg",
+            "bgColor" : "#007bff"
+    
+        },
+        {
+            "img" : "https://designrevision.com/demo/shards-dashboard-lite-react/static/media/4.026cb7af.jpeg",
+            "titile": "BUSINESS",
+            "avatar": "https://airbnbnew.cybersoft.edu.vn/avatar/04-10-2023-09-13-34-3.jpg",
+            "bgColor" : "#ffb400"
+    
+        }
+    ],
+    "rowTow" : [
+        {
+            "img" : "https://designrevision.com/demo/shards-dashboard-lite-react/static/media/5.6e846951.jpeg",
+            "titile": "TRAVEL",
+            "avatar": "https://airbnbnew.cybersoft.edu.vn/avatar/04-10-2023-09-08-33-01-3.jpg",
+            "bgColor" : "#00b8d8" 
+        },
+        {
+            "img" : "https://designrevision.com/demo/shards-dashboard-lite-react/static/media/6.47789d67.jpeg",
+            "titile": "BUSINESS",
+            "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+            "bgColor" : "#212529" 
+        }
+
+    ],
+    "rowThree" : [
+      [
+            {
+                "img" : "https://media.istockphoto.com/id/1127768734/vi/anh/s%C3%B4ng-seine-%E1%BB%9F-paris.jpg?s=612x612&w=0&k=20&c=dvATA1bPE6CCfbma06G-FAYJJsQ7vf9Hnf269PVT4SY=",
+                "titile": "BUSINESS",
+                "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+                "bgColor" : "#212529" 
+            },
+            {
+                "img" : "https://designrevision.com/demo/shards-dashboard-lite-react/static/media/7.2835396c.jpeg",
+                "titile": "BUSINESS",
+                "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+                "bgColor" : "#212529" 
+            },
+             
+        {
+            "img" : "https://designrevision.com/demo/shards-dashboard-lite-react/static/media/8.10b775cc.jpeg",
+            "titile": "BUSINESS",
+            "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+            "bgColor" : "#212529" 
+        },
+        {
+            "img" : "https://cdn.stocksnap.io/img-thumbs/280h/2W3TCYXMP3.jpg",
+            "titile": "BUSINESS",
+            "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+            "bgColor" : "#212529" 
+        }
+     ],
+     [
+        {
+            "img" : "https://images.unsplash.com/photo-1613169620329-6785c004d900?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2FoYXJhJTIwZGVzZXJ0fGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+            "titile": "BUSINESS",
+            "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+            "bgColor" : "#212529" 
+        },
+        {
+            "img" : "https://t4.ftcdn.net/jpg/02/36/35/15/240_F_236351581_rHUU1UGizuQzR7978aopYtn9dB0CORh5.jpg",
+            "titile": "BUSINESS",
+            "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+            "bgColor" : "#212529" 
+        },
+         
+    {
+        "img" : "https://cdn.stocksnap.io/img-thumbs/280h/venice-italy_ICLODQJOJA.jpg",
+        "titile": "BUSINESS",
+        "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+        "bgColor" : "#212529" 
+    },
+    {
+        "img" : "https://images.pexels.com/photos/1766838/pexels-photo-1766838.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "titile": "BUSINESS",
+        "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+        "bgColor" : "#212529" 
+    }
+ ],
+ [
+    {
+        "img" : "https://cdn.stocksnap.io/img-thumbs/280h/8EK3T0RWZZ.jpg",
+        "titile": "BUSINESS",
+        "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+        "bgColor" : "#212529" 
+    },
+    {
+        "img" : "https://designrevision.com/demo/shards-dashboard-lite-react/static/media/10.fe349e85.jpeg",
+        "titile": "BUSINESS",
+        "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+        "bgColor" : "#212529" 
+    },
+     
+{
+    "img" : "https://cdn.stocksnap.io/img-thumbs/280h/B59VTCKXJR.jpg",
+    "titile": "BUSINESS",
+    "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+    "bgColor" : "#212529" 
+},
+{
+    "img" : "https://cdn.stocksnap.io/img-thumbs/280h/W4DYJTBQBU.jpg",
+    "titile": "BUSINESS",
+    "avatar": "https://s43365.pcdn.co/wp-content/uploads/2015/09/elon-th.jpg",
+    "bgColor" : "#212529" 
+}
+]
+    ]
+}

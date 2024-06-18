@@ -1,0 +1,43 @@
+I. Thu vien:
+
+ 1. UX/UI: https://flowbite.com
+ 2. lấy dữ liệu validate: https://www.npmjs.com/package/react-hook-form
+ - Bước 1: yarn add react-hook-form
+ - Bước 2: yarn add zod
+ - BƯớc 3: yarn add @hookform/resolvers
+ 2. Call Api
+ - Bước 1: yarn add axios
+
+ 3. tostify(thông báo khi đăng ký/ nhập thành công)
+ https://www.npmjs.com/package/react-toastify
+  - Bước 1: yarn add react-toastify
+  - Bước 2: vào main.tsx thêm toastContainer cùng cấp app
+    <BrowserRouter>
+  <ToastContainer/>
+    <App />
+  </BrowserRouter>
+  - Bước 3: import
+    import 'react-toastify/dist/ReactToastify.css';
+4. redux toolkit
+- Bước 1: yarn add @reduxjs/toolkit và yarn add react-redux
+- Bước 2: vào main.tsx bọc tất cả bên trong <BrowserRouter> vào <Provider> || và Provider phải có store
+  <BrowserRouter>
+    <Provider store={store}> // store thứ 2 là mình đi config
+      <ToastContainer />
+      <App />
+    </Provider>
+  </BrowserRouter>
+
+
+
+
+
+
+
+
+II. api: http://svcy.myclass.vn/swagger/ui/index#!/ToDoList/ToDoList_deleteTask
+
+III. swagger: http://movienew.cybersoft.edu.vn/swagger/index.html
+
+IV. Token (3 tháng) nếu hết ib cybersoft
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA0NiIsIkhldEhhblN0cmluZyI6IjMxLzAxLzIwMjQiLCJIZXRIYW5UaW1lIjoiMTcwNjY1OTIwMDAwMCIsIm5iZiI6MTY3ODI5NDgwMCwiZXhwIjoxNzA2ODA2ODAwfQ.RmFBx9ElL7VuYNzZnzMoGUHyC3iXKRpw7Yvq2LsXk0Q

@@ -1,0 +1,17 @@
+
+$custom-search-button-bg: #FF385C; 
+$custom-search-button-border-radius: 3rem; 
+
+.custom-search-button {
+  background-color: $custom-search-button-bg;
+  border-radius: $custom-search-button-border-radius;
+  border-color: $custom-search-button-bg;
+  color: white;
+}
+
+.custom-search-button:hover {
+  background-color: darken($custom-search-button-bg, 10%);
+  border-color: darken($custom-search-button-bg, 10%);
+}
+
+
