@@ -101,13 +101,16 @@ const Account = () => {
   };
   useEffect(() => {
     if (token) {
-      reset({ ...ThongTinUser, gender: String(ThongTinUser?.gender) });
       dispatch(getMyTrips(id));
       dispatch(getAirbnbListThunk());
+      reset({
+        ...ThongTinUser,
+        gender: String(ThongTinUser?.gender),
+      });
     } else {
       navigate("/");
     }
-  }, [reset, ThongTinUser]);
+  }, [ThongTinUser]);
   return (
     <AccountCSS className="container py-12">
       {/* modal */}
@@ -441,8 +444,8 @@ const Account = () => {
                     <p className="!text-base font-600">
                       <span>Ngày đi</span>:{" "}
                       <span className="font-600">
-                        {moment(trip.ngayDi).format("DD/MM/YYYY")} ~{" "}
-                        {moment(trip.ngayDen).format("DD/MM/YYYY")}
+                        {moment(trip.ngayDen).format("DD/MM/YYYY")} ~{" "}
+                        {moment(trip.ngayDi).format("DD/MM/YYYY")}
                       </span>
                     </p>
                     <button

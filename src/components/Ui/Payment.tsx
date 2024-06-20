@@ -55,6 +55,7 @@ const Payment = ({
   const comfirmPay = () => {
     modalRef?.current?.showModal();
   };
+  console.log(date);
   const handelPay = async () => {
     const payload: bookRoom = {
       maNguoiDung: ThongTinUser?.id,
@@ -63,13 +64,15 @@ const Payment = ({
       ngayDen: moment(date[0].startDate).toISOString(),
       ngayDi: moment(date[0].endDate).toISOString(),
     };
-    !ThongTinUser
+    !ThongTinUser || !localStorage.getItem("token")
       ? toast.error("Bạn cần phải đăng nhập trước")
       : await dispatch(bookRoomThunk(payload));
+    await dispatch(getMyTrips(String(localStorage.getItem("id"))));
+    modalRef?.current.close();
   };
   // hook
   useEffect(() => {
-    dispatch(getMyTrips(String(localStorage.getItem("id"))));
+    dispatch(getMyTrips(localStorage.getItem("id")));
   }, []);
   return (
     <CSSContainer>
@@ -78,7 +81,7 @@ const Payment = ({
           <aside>
             <div className="border-gray-300 bg-white shadow-xl border p-5 rounded-xl">
               <p className="font-medium text-lg py-5 flex justify-between">
-                <span className="font-600 text-xl flex space-x-6">
+                <span className="font-600 text-xl flex items-center space-x-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -108,9 +111,7 @@ const Payment = ({
                     </span>{" "}
                     (
                     <span>
-                      {Math.abs(
-                        differenceInDays(date[0].startDate, date[0].endDate)
-                      )}
+                      {Math.abs(differenceInDays(Trip?.ngayDen, Trip?.ngayDi))}
                     </span>{" "}
                     đêm)
                   </div>
@@ -468,7 +469,7 @@ const Payment = ({
                 {!checkPayment ? (
                   <button
                     onClick={comfirmPay}
-                    className="bg-mainColor w-full p-5 rounded-xl text-xl font-600 text-white"
+                    className="payment w-full p-5 rounded-xl text-xl font-600 text-white"
                   >
                     Thanh toán
                   </button>
@@ -483,26 +484,44 @@ const Payment = ({
                 <p className="text-center mt-5">Bạn vẫn chưa bị trừ tiền?</p>
               </section>
               {/* bill */}
-              <section className="py-5 space-y-5">
-                <p className="underline flex justify-between text-xl">
-                  <span>
-                    <span>$</span> {detailRoom?.giaTien}x{calcuNight()} đêm
-                  </span>
-                  <span>${detailRoom?.giaTien * calcuNight()}</span>
-                </p>
-                <p className="underline flex justify-between text-xl">
-                  <span>Phí dịch vụ Airbnb</span>
-                  <span>
-                    ${(detailRoom?.giaTien * 0.2 * calcuNight()).toFixed(1)}
-                  </span>
-                </p>
-              </section>
+              {!checkPayment && (
+                <section className="py-5 space-y-5">
+                  <p className="underline flex justify-between text-xl">
+                    <span>
+                      <span>$</span>
+                      {detailRoom?.giaTien}x{calcuNight()} đêm
+                    </span>
+                    <span>${detailRoom?.giaTien * calcuNight()}</span>
+                  </p>
+                  <p className="underline flex justify-between text-xl">
+                    <span>Phí dịch vụ Airbnb</span>
+                    <span>
+                      ${(detailRoom?.giaTien * 0.2 * calcuNight()).toFixed(1)}
+                    </span>
+                  </p>
+                </section>
+              )}
               <hr />
               <section className="py-5 flex text-xl font-semibold justify-between items-center">
-                <span>Tổng trước thuế</span>
-                <span>
-                  ${(detailRoom?.giaTien * calcuNight() * 1.2).toFixed(1)}
-                </span>
+                {checkPayment ? (
+                  <span>Đã thanh toán</span>
+                ) : (
+                  <span>Tổng trước thuế</span>
+                )}
+                {checkPayment ? (
+                  <span>
+                    $
+                    {(
+                      detailRoom?.giaTien *
+                      Math.abs(differenceInDays(Trip?.ngayDen, Trip?.ngayDi)) *
+                      1.2
+                    ).toFixed(1)}
+                  </span>
+                ) : (
+                  <span>
+                    ${(detailRoom?.giaTien * 1.2 * calcuNight()).toFixed(1)}
+                  </span>
+                )}
               </section>
             </div>
           </aside>
@@ -511,5 +530,17 @@ const Payment = ({
     </CSSContainer>
   );
 };
-const CSSContainer = styled.div``;
+const CSSContainer = styled.div`
+  .payment {
+    background: radial-gradient(
+      circle at left,
+      #ff385c 0%,
+      #e61e4d 27.5%,
+      #e31c5f 40%,
+      #d70466 57.5%,
+      #bd1e59 75%,
+      #bd1e59 100%
+    ) !important;
+  }
+`;
 export default Payment;

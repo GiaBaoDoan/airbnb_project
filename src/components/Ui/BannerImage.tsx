@@ -1,5 +1,4 @@
 import data from "../../JSON/ImageBanner.json";
-
 const BannerImage = () => {
   return (
     <section className="w-[95%] mx-auto">

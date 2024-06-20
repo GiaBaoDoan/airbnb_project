@@ -5,18 +5,28 @@ import Register from "pages/Register";
 import Account from "pages/Acount";
 import { PATH } from "constant";
 import Users from "pages/Admin/Users";
-import Children from "pages/Children";
-import Sidebar from "pages/SideBar";
-import Posts from "pages/Post";
 import Rooms from "pages/Rooms";
 import { HomeAirbnb } from "pages";
 import ListRoom from "pages/ListRoom";
 import AddUsers from "pages/Admin/AddUsers";
-import AirBnbDetail from "pages/airbnbDetail/AirBnbDetail";
 import Location from "pages/Location";
 import MainLayOut from "components/layouts/MainLayout";
 import ResultPage from "pages/ResultPage";
+import AirBnbDetail from "pages/AirBnbDetail";
 export const router: RouteObject[] = [
+  {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+    ],
+  },
   {
     element: <MainLayOut />,
     children: [
@@ -44,12 +54,7 @@ export const router: RouteObject[] = [
   },
   {
     path: PATH.admin,
-    element: <Sidebar children={<Children />} />,
     children: [
-      {
-        path: "/admin/Post",
-        element: <Posts />,
-      },
       {
         path: PATH.adduser,
         element: <AddUsers />,
@@ -68,36 +73,4 @@ export const router: RouteObject[] = [
       },
     ],
   },
-  {
-    element: <AuthLayout />,
-    children: [
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-    ],
-  },
-  // {
-
-  // {
-  //   element: <HeaderListRoom />,
-  //   children: [
-  //     {
-  //       path: "/ListRoom",
-  //       element: <ListRoom />,
-  //     },
-  //     {
-  //       path: "/ListRoom/:id",
-  //       element: <ListRoom />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "*",
-  //   element: <Notfound />,
-  // },
 ];

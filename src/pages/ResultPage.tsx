@@ -14,7 +14,6 @@ const ResultPage = () => {
   const { roomByLocation, isPending } = useSelector(
     (state: RootState) => state.roomByLocationReducer
   );
-
   const { location } = useSelector(
     (state: RootState) => state.getLocationReducer
   );

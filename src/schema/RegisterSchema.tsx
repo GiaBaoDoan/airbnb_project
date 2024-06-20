@@ -24,6 +24,6 @@ export const RegisterSchema = z.object({
     .email("email không tồn tại "),
   phone: z.string().nonempty("Vui lòng nhập số điện thoại"),
   name: z.string().nonempty("Vui lòng nhập số họ tên"),
-  birthday: z.string().nonempty(),
+  birthday: z.string().nonempty("Vui lòng chọn ngày sinh"),
   gender: z.string().nonempty("Vui lòng chọn giới tính"),
 });

@@ -74,7 +74,7 @@ const Comments = () => {
     dispatch(postCommentThunk(comment));
   //  mount
   useEffect(() => {
-    dispatch(getAirbnbCommentThunk(Number(id)));
+    dispatch(getAirbnbCommentThunk(id));
   }, [dispatch]);
   return (
     <section className="py-12 ">
@@ -110,7 +110,7 @@ const Comments = () => {
                 <button
                   onClick={async () => {
                     await dispatch(deleteCommentThunk(comment.id));
-                    dispatch(getAirbnbCommentThunk(Number(id)));
+                    dispatch(getAirbnbCommentThunk(id));
                   }}
                 >
                   <svg

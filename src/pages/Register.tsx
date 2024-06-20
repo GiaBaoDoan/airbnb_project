@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, DatePicker } from "antd";
+import { DatePicker } from "antd";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,12 +10,11 @@ import { registerThunk } from "store/quanLyNguoiDung/thunk";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { PATH } from "constant";
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
 const Register = () => {
   const dispatch = useAppDispath();
   const navigate = useNavigate();
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<boolean>();
   const {
     handleSubmit,
     register,
@@ -25,7 +24,13 @@ const Register = () => {
     mode: "onChange",
     resolver: zodResolver(RegisterSchema),
   });
+  const checkBirthday = () => {
+    const date = document.getElementById("myDatePicker") as HTMLInputElement;
+    date.value.length > 0 ? setError(false) : setError(true);
+  };
+  const [loading, setLoading] = useState(false);
   const onSubmit = async (data) => {
+    setLoading(true);
     dispatch(registerThunk(data))
       .unwrap()
       .then(() => {
@@ -37,35 +42,28 @@ const Register = () => {
           timer: 1500,
         });
         navigate(PATH.Login);
+        setLoading(false);
       })
-      .catch((err) => toast.error(err?.response?.data?.content));
+      .catch((err) => {
+        toast.error(err?.response?.data?.content);
+        setLoading(false);
+      });
   };
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      navigate("/");
-    }
-  }, []);
-
   const handelChangeDatePicker = (date) => {
+    date ? setError(false) : setError(true);
     setValue("birthday", date ? date.format("DD/MM/YYYY") : null);
-    if (date == null) {
-      setError("Vui lòng nhập ngày sinh");
-    } else {
-      setError("");
-    }
   };
-
   return (
     <RegisterCSS>
       <div className="overlay"></div>
-      <div className="box relative singup max-ipad:!w-[90%] max-tablet:!h-[90%] ">
+      <div className="box relative">
         <form
           noValidate
           onSubmit={handleSubmit(onSubmit)}
-          className="Form xl:w-[1200px] max-ipad:!w-full max-tablet:!h-full overflow-auto  p-[10px]  bg-white "
+          className="Form space-y-5"
         >
-          <div className="w-full flex">
-            <div className="m-[25px]">
+          <div className="w-full py-5 flex">
+            <div>
               <svg
                 onClick={() => navigate("/")}
                 width="102"
@@ -83,109 +81,67 @@ const Register = () => {
                 ></path>
               </svg>
             </div>
-            <h2 className="text-[35px] mt-[20px] max-tablet:text-[25px] flex w-full justify-center text-[#00308F] font-600">
-              Sign Up
+            <h2 className="text-2xl text-[#00308F] justify-center flex w-full items-center font-600">
+              Đăng ký
             </h2>
           </div>
-          <div className="p-[20px]">
-            <div className="mb-[14px] grid grid-cols-2 max-tablet:grid-cols-1">
-              <div className="mr-[20px] max-tablet:mr-[0px] ">
-                <Input
-                  register={register}
-                  name="name"
-                  type="text"
-                  error={errors?.name?.message as string}
-                  placeholder="Full Name"
-                />
-              </div>
-              <div>
-                <Input
-                  error={errors?.email?.message as string}
-                  register={register}
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                />
-              </div>
+          <div className="space-y-5">
+            <div className="space-y-5">
+              <Input
+                register={register}
+                name="name"
+                type="text"
+                error={errors?.name?.message as string}
+                placeholder="Họ và tên"
+              />
+
+              <Input
+                name="password"
+                error={errors?.password?.message as string}
+                type="password"
+                register={register}
+                placeholder="Mật khẩu"
+              />
             </div>
-            <div className="mb-[14px] grid grid-cols-2 max-tablet:grid-cols-1">
-              <div className="mr-[20px] max-tablet:mr-[0px]">
-                <Input
-                  register={register}
-                  error={errors?.phone?.message as string}
-                  name="phone"
-                  type="text"
-                  placeholder="Phone Number"
-                />
-              </div>
-              <div>
-                <Input
-                  name="password"
-                  error={errors?.password?.message as string}
-                  type="password"
-                  register={register}
-                  placeholder="Password"
-                />
-              </div>
+            <div className="grid gap-3 grid-cols-2">
+              <Input
+                register={register}
+                error={errors?.phone?.message as string}
+                name="phone"
+                type="text"
+                placeholder="Số điện thoại"
+              />
+
+              <Input
+                error={errors?.email?.message as string}
+                register={register}
+                type="email"
+                name="email"
+                placeholder="Email"
+              />
             </div>
-            <div className="mb-[14px]  grid grid-cols-2 max-tablet:grid-cols-1">
-              <div className="mr-[20px] max-tablet:mr-[0px]">
-                <select
-                  {...register("gender")}
-                  id="countries_disabled"
-                  className={
-                    errors?.gender
-                      ? "outline-none hover:border-[#4096ff] focus:border-[#4096ff] block w-full !border-red-500"
-                      : "outline-none hover:border-[#4096ff] focus:border-[#4096ff] block w-full"
-                  }
-                >
-                  <option value="">Gender</option>
-                  <option value="true">Male</option>
-                  <option value="false">FeMale</option>
-                </select>
-                {errors.gender && (
-                  <p className="!text-red-500 text-[20px] flex">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="red"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      className="w-[32px] text-[50px] h-[32px] text-white font-800 align-bottom mr-[5px]"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-                      />
-                    </svg>
-                    {errors.gender.message as string}
-                  </p>
-                )}
-              </div>
+            <section className="space-y-5">
               <div>
                 <DatePicker
                   {...register("birthday")}
                   name="birthday"
                   id="myDatePicker"
                   onChange={handelChangeDatePicker}
-                  className={
-                    error
-                      ? "w-full !border-red-500 birthday hover:!border-red-500 focus:!border-red-500"
-                      : "w-full  birthday hover:!border-[#4096ff] focus:!border-[#4096ff]"
-                  }
-                  placeholder="Birthday"
+                  className={`w-full p-10 border border-gray-500 birthDay ${
+                    error ? "border-red-500" : "border-gray-300"
+                  }`}
+                  placeholder="Ngày sinh"
                   format={"DD/MM/YYYY"}
                 />
                 {error && (
-                  <p className="!text-red-500 text-[20px]  flex">
+                  <div className="!text-red-500 text-base items-center space-x-4 mt-3 flex">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="red"
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      className="w-[32px] text-[50px] h-[32px] text-white font-800 align-bottom mr-[5px]"
+                      className="w-5 h-5 text-white font-800 align-bottom "
                     >
                       <path
                         stroke-linecap="round"
@@ -193,31 +149,36 @@ const Register = () => {
                         d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
                       />
                     </svg>
-                    {error}
-                  </p>
+                    <span>{error ? "Vui lòng nhập ngày sinh" : ""}</span>
+                  </div>
                 )}
               </div>
-            </div>
+              <select
+                {...register("gender")}
+                className="outline-none cursor-pointer"
+              >
+                <option value="true">Nam</option>
+                <option value="false">Nữ</option>
+              </select>
+            </section>
           </div>
-          <div className="text-center">
-            <Button
-              onClick={() => {
-                const date = document.getElementById(
-                  "myDatePicker"
-                ) as HTMLInputElement;
-                if (date.value == "") {
-                  setError("Vui lòng nhập ngày sinh");
-                }
-              }}
-              htmlType="submit"
-              type="primary"
-              className="btn-submit max-ipad:!w-full max-tablet:!w-[90%] !mx-auto"
+          <div>
+            <button
+              onClick={checkBirthday}
+              type="submit"
+              disabled={loading}
+              className={`font-600 rounded text-lg text-white w-full p-3 ${
+                loading ? "!bg-gray-300 cursor-no-drop" : "btn-submit"
+              }`}
             >
-              <span>Đăng ký</span>
-            </Button>
-            <div className="my-[20px]">
-              <NavLink to={PATH.Login} className={"text-[#FF4500] text-[20px]"}>
-                {" "}
+              <span>Tiếp tục</span>
+            </button>
+            <div className="my-5 text-center">
+              <span>Đã có tài khoản? </span>
+              <NavLink
+                to={PATH.Login}
+                className={"text-mainColor font-500 text-5"}
+              >
                 Đăng nhập ngay
               </NavLink>
             </div>
@@ -228,140 +189,11 @@ const Register = () => {
   );
 };
 const RegisterCSS = styled.div`
-  background-image: url("https://news.airbnb.com/wp-content/uploads/sites/4/2020/04/Airbnb_Peru_Skylodge.jpg");
-  height: 100vh;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .singup {
-    animation: signin-flip 1.5s;
-    @keyframes signin-flip {
-      0% {
-        opacity: 0;
-        transform: translateY(-150px);
-      }
-      100% {
-        transform: translateY(0px);
-        opacity: 1;
-      }
-    }
-  }
-  .overlay {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.2);
-  }
-  .logo {
-    width: 200px;
-  }
-  form {
-    width: 1000px;
-    position: absolute;
-    height: 680px;
-    top: 50%;
-    z-index: 10;
-    padding: 25px;
-    left: 50%;
-    border-radius: 10px;
-    transform: translateX(-50%) translateY(-50%);
-  }
-  .box {
-    border-radius: 10px;
-    width: 1010px;
-    height: 690px;
-    overflow: hidden;
-    &::before {
-      content: "";
-      position: absolute;
-      transform: translateX(50%);
-      top: -50%;
-      left: -50%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(60deg, #45f3ff, #45f3ff);
-      /* border-radius: 10px; */
-      transform-origin: bottom right;
-      animation: animate 6s linear infinite;
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      top: -50%;
-      transform: translateX(50%);
-      left: -50%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(60deg, #d9138a, #d9138a);
-      transform-origin: bottom right;
-      animation: animate 6s linear infinite;
-      animation-delay: -3s;
-      @keyframes animate {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    }
-  }
-  .btn-submit {
-    width: 500px;
-    height: 40px;
-    font-size: 18px;
-    font-family: sans-serif;
-    text-decoration: none;
-    color: #333;
-    border: 2px solid #333;
-    letter-spacing: 2px;
-    text-align: center;
-    position: relative;
-    transition: all 0.35s;
-    span {
-      position: relative;
-      z-index: 2;
-    }
-    &::after {
-      position: absolute;
-      content: "";
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 100%;
-      background: #ff4500;
-      transition: all 0.35s;
-    }
-    &:hover {
-      &::after {
-        width: 100%;
-      }
-      color: #fff;
-    }
-  }
-  input,
-  select,
-  .birthday {
-    margin-top: 10px;
+  input {
+    font-family: "Montserrat";
     padding: 13px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-bottom: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    font-family: montserrat;
-    color: #2c3e50;
-    font-size: 18px;
-  }
-  .birthday {
-    height: 51px;
-    font-size: 30px;
-    ::placeholder {
-      font-size: 18px;
+    &::placeholder {
+      color: gray !important;
     }
   }
 `;

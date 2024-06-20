@@ -8,9 +8,9 @@ export const quanLyAirbnbCommentServices = {
     api.get<ApiRespose<myCustomDataType[]>>("/binh-luan"),
   postComment: (payload: any) =>
     api.post<ApiRespose<myCustomDataType>>("/binh-luan", payload),
-  getRoomComment: (id: number) =>
+  getRoomComment: (maPhong: string) =>
     api.get<ApiRespose<myCustomDataType[]>>(
-      `/binh-luan/lay-binh-luan-theo-phong/${id}`
+      `/binh-luan/lay-binh-luan-theo-phong/${maPhong}`
     ),
   deleteComment: (id: number) =>
     api.delete<ApiRespose<myCustomDataType>>(`/binh-luan/${id}`),

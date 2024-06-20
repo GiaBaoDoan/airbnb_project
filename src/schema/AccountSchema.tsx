@@ -7,5 +7,5 @@ export const AccountSchema = z.object({
   phone: z.string().nonempty("Vui lòng nhập số điện thoại"),
   name: z.string().nonempty("Vui lòng nhập số họ tên"),
   birthday: z.string().refine((value) => value !== null, "Hahaa"),
-  gender: z.string().nonempty("Vui lòng chọn giới tính"),
+  gender: z.string(),
 });

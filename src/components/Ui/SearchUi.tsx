@@ -129,10 +129,10 @@ const SearchUi = ({
                   moveRangeOnFirstSelection={false}
                   direction="horizontal"
                   ranges={date}
-                  months={1}
+                  months={2}
                   dateDisplayFormat="dd/MM/yyyy" // Định dạng hiển thị của ngày
                   minDate={new Date()}
-                  className="border absolute top-[80px] right-[100px] bg-white z-10 !text-black rounded-xl border-gray-400 p-5 shadow"
+                  className="border absolute top-[80px] right-[0px] bg-white z-10 !text-black rounded-xl border-gray-400 p-5 shadow"
                 >
                   <p>Chọn</p>
                 </DateRange>
@@ -194,15 +194,21 @@ const SearchUi = ({
         )}
         <div
           onClick={() => {
-            setOpen(!open);
-            open && address && navigate(`/results/${address?.id}`);
+            setOpen(true);
+            address && navigate(`/results/${address?.id}`);
           }}
           className="bg-mainColor border-r flex items-center justify-center p-3 rounded-full"
         >
           <SearchIcon />
         </div>
         {open && (
-          <div className="ml-5" onClick={() => setOpen(false)}>
+          <div
+            className="ml-5"
+            onClick={() => {
+              setOpen(false);
+              setBookingDate(false);
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

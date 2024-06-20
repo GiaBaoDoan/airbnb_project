@@ -14,6 +14,6 @@ export const quanLyAirbnbServices = {
     api.get<ApiRespose<airbnbRoom>>(`/phong-thue/${id}`),
   getRoomCommentList: () => api.get<ApiRespose<airbnbRoom[]>>("/binh-luan"),
   huyChuyen: (id: any) => api.delete<ApiRespose<any>>(`/dat-phong/${id}`),
-  getMyTrip: (IUser: any) =>
+  getMyTrip: (IUser: string) =>
     api.get<ApiRespose<myTrip[]>>(`/dat-phong/lay-theo-nguoi-dung/${IUser}`),
 };

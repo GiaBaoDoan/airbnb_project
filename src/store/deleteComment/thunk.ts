@@ -7,7 +7,7 @@ export const deleteCommentThunk = createAsyncThunk(
       const res = await quanLyAirbnbCommentServices.deleteComment(id);
       return res.data.content;
     } catch (err) {
-      rejectWithValue(err);
+      return rejectWithValue(err);
     }
   }
 );

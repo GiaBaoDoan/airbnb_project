@@ -12,9 +12,6 @@ import { Navigation, Pagination } from "swiper/modules";
 import { max, min } from "store/filterPrice/slice";
 export const HomeAirbnb = () => {
   const dispatch = useAppDispath();
-  // const { ThongTinUser } = useSelector(
-  //   (state: RootState) => state.LayThongTinTinReducer
-  // );
   const { AirbnbList, isFetchingAirbnb } = useSelector(
     (state: RootState) => state.quanLyAirbnb
   );

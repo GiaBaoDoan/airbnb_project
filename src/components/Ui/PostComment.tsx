@@ -42,7 +42,7 @@ const PostComment = ({
       ? toast.error("Bạn cần phải đăng nhập trước")
       : await createComment(comment);
     setNoiDung("");
-    dispatch(getAirbnbCommentThunk(Number(maPhong)));
+    dispatch(getAirbnbCommentThunk(maPhong));
   };
   return (
     <section className="py-5">

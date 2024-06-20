@@ -17,8 +17,8 @@ const quanLyAirBnbSlice = createSlice({
         state.isDeleteting = true;
       })
       .addCase(deleteCommentThunk.fulfilled, (state) => {
-        state.isDeleteting = false;
         toast.success("Xóa thành công");
+        state.isDeleteting = false;
       })
       .addCase(
         deleteCommentThunk.rejected,
