@@ -7,6 +7,7 @@ import { RootState, useAppDispath } from "store";
 import { getLocationThunk } from "store/GetViTri/thunk";
 import { max, min } from "store/filterPrice/slice";
 import { getRoomByLocationThunk } from "store/getRoomByLocation/thunk";
+import { setAction } from "store/searchSlice/slice";
 
 const ResultPage = () => {
   const { id } = useParams();
@@ -31,6 +32,7 @@ const ResultPage = () => {
     dispatch(getLocationThunk());
     dispatch(min(null));
     dispatch(max(null));
+    dispatch(setAction(false));
   }, [id]);
   if (isPending) return <LoadingPage />;
 

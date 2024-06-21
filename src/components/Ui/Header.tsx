@@ -10,6 +10,7 @@ import featureJson from "../../JSON/FeaturesInRoom.json";
 import Filter from "components/Ui/icon/Filter";
 import { RootState, useAppDispath } from "store";
 import { toast } from "react-toastify";
+
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 type Feature = {
@@ -18,8 +19,8 @@ type Feature = {
 };
 export const Header = () => {
   const dispatch = useAppDispath();
+  const { open } = useSelector((state: RootState) => state.searchReducer);
   const { avatar } = useSelector((state: RootState) => state.UploadAnhReducer);
-  const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const modalRef = useRef<HTMLDialogElement>();
   const [minPrice, setMinprice] = useState<number>(20);
@@ -72,7 +73,7 @@ export const Header = () => {
             }  py-5 font-semibold items-center transition-all mx-auto justify-between w-[95%]`}
           >
             <LogoIcon />
-            <SearchUi open={open} setOpen={setOpen} />
+            <SearchUi />
             <div className="flex space-x-5 items-center">
               <h4>Cho thuê chỗ ở qua Airbnb</h4>
               <Icon className="cursor-pointer" />
@@ -199,9 +200,9 @@ export const Header = () => {
                   <span>
                     Giá{" "}
                     {Number(maxPrice) < Number(minPrice)
-                      ? "tối đa"
-                      : "tối thiểu"}{" "}
-                    :{" "}
+                      ? " tối đa"
+                      : " tối thiểu"}
+                    :
                   </span>
                   <span className="font-600 flex items-center space-x-4">
                     <svg
@@ -237,11 +238,11 @@ export const Header = () => {
               <div className="text-lg">
                 <div className="flex items-center space-x-3">
                   <span>
-                    Giá
+                    Giá{" "}
                     {Number(maxPrice) < Number(minPrice)
                       ? "tối thiểu"
                       : "tối đa"}
-                    :{" "}
+                    :
                   </span>
                   <span className="font-600 flex items-center space-x-4">
                     <svg
@@ -275,38 +276,56 @@ export const Header = () => {
             </div>
             <hr />
             <div className="py-5 ">
-              {" "}
               <span className="font-600 text-lg">Tính năng cho căn phòng</span>
               <div className="flex flex-wrap gap-5 mt-5">
                 {featureJson?.map((item) => (
                   <button
                     key={item.val}
                     onClick={() => handelFeature(item)}
-                    className={`${
+                    className={`flex space-x-4 items-center ${
                       active.includes(item) ? "bg-black text-white" : "bg-white"
                     } border px-5 py-3 rounded-xl font-500 text-sm`}
                   >
-                    {item?.text}
+                    <span>{item?.text}</span>
+
+                    <span>
+                      {active.includes(item) && (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="lucide lucide-check"
+                        >
+                          <path d="M20 6 9 17l-5-5" />
+                        </svg>
+                      )}
+                    </span>
                   </button>
                 ))}
               </div>
             </div>
-            <div className="flex justify-between mt-5">
+            <div className="flex justify-between items-center mt-5">
               <button
                 onClick={handelFilter}
-                className="bg-black/100 px-7 font-600 rounded-xl py-3 text-white"
+                className="bg-black/100 px-7 font-600 rounded-lg py-3 text-white"
               >
                 Lọc
               </button>
               <button
+                className="underline font-bold"
                 onClick={() => {
                   dispatch(min(null));
                   dispatch(max(null));
                   modalRef.current.close();
                 }}
-                className="bg-black/80 hover:bg-black/100 px-7 font-600 rounded-xl py-3 text-white"
               >
-                Mặc định
+                Mặc định lọc
               </button>
             </div>
           </div>

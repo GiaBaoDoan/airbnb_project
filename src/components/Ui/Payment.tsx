@@ -55,7 +55,6 @@ const Payment = ({
   const comfirmPay = () => {
     modalRef?.current?.showModal();
   };
-  console.log(date);
   const handelPay = async () => {
     const payload: bookRoom = {
       maNguoiDung: ThongTinUser?.id,

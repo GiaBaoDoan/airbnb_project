@@ -6,17 +6,14 @@ import { addDays, format } from "date-fns";
 import { RootState, useAppDispath } from "store";
 import { getLocationThunk } from "store/GetViTri/thunk";
 import { useSelector } from "react-redux";
+import { setAction } from "store/searchSlice/slice";
 import { location } from "types/ViTri";
 import { useNavigate } from "react-router-dom";
-const SearchUi = ({
-  open,
-  setOpen,
-}: {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}) => {
+const SearchUi = () => {
   const [adults, setAdults] = useState(1);
+  const [openLocation, setOpenLocation] = useState<boolean>(false);
   const [children, setChildren] = useState(0);
+  const { open } = useSelector((state: RootState) => state.searchReducer);
   const [pet, setPet] = useState(0);
   const [bookingDate, setBookingDate] = useState(false);
   const dispatch = useAppDispath();
@@ -35,19 +32,24 @@ const SearchUi = ({
   useEffect(() => {
     dispatch(getLocationThunk());
   }, []);
+  console.log(open);
   return (
     <section className={`cursor-pointer z-[100] transition-all`}>
       <div
-        className={`border flex shadow pr-5 hover:shadow-md transition-all  items-center rounded-full ${
+        className={`border flex  shadow pr-5 hover:shadow-md transition-all  items-center rounded-full ${
           open ? "scale-110 translate-y-[20px] " : ""
         }`}
       >
         {!open && (
           <div
-            onClick={() => setOpen(true)}
+            onClick={() => dispatch(setAction(true))}
             className="flex p-3 space-x-7 px-7"
           >
-            <p className="border-r pr-5">Địa điểm bất kỳ</p>
+            <p className="border-r pr-5">
+              {address
+                ? `${address?.tenViTri}, ${address.tinhThanh}`
+                : "Địa điểm tìm kiếm"}
+            </p>
             <p className="border-r pr-5">Tuần bất kỳ</p>
             <p>Thêm khách</p>
           </div>
@@ -60,10 +62,10 @@ const SearchUi = ({
               className="dropdown border-r dropdown-bottom"
             >
               <div
-                tabIndex={0}
-                className="p-3   hover:bg-black/5 relative px-7 space-y-4 h-full rounded-full"
+                onClick={() => setOpenLocation(true)}
+                className="p-3  hover:bg-black/5 w-[200px] relative px-7 space-y-4 h-full rounded-full"
               >
-                <p>Địa điểm bất kỳ</p>
+                <p>{address ? address?.tenViTri : "Địa điểm tìm kiếm"}</p>
                 <p className="font-normal text-sm">
                   {address && (
                     <span>
@@ -73,35 +75,44 @@ const SearchUi = ({
                   {!address?.tenViTri && "Tìm kiếm điểm đến"}
                 </p>
               </div>
-              <div
-                tabIndex={0}
-                className="dropdown-content overflow-y-scroll space-y-5 w-[400px] border border-gray-300 shadow-xl z-[1] menu p-3 bg-white rounded"
-              >
-                {location?.map((item, index) => {
-                  return (
-                    <li key={index} onClick={() => setAddress(item)}>
-                      <div className="flex items-center">
-                        <img
-                          src={item.hinhAnh}
-                          className="h-9 w-9 rounded"
-                          alt=""
-                        />
-                        <p className="flex flex-col">
-                          <span>
-                            {item.tenViTri}, {item.tinhThanh}
-                          </span>
-                          <span className="font-400">{item.quocGia}</span>
-                        </p>
+              {openLocation && (
+                <div className="w-[400px] h-[500px] border shadow absolute rounded-lg bg-white overflow-y-scroll">
+                  {location?.map((item, index) => {
+                    return (
+                      <div>
+                        <div
+                          key={index}
+                          onClick={() => setAddress(item)}
+                          className="flex items-center p-5 hover:bg-black/5 space-x-3"
+                        >
+                          <img
+                            src={item.hinhAnh}
+                            className="h-11 w-11 object-cover rounded"
+                            alt=""
+                          />
+                          <p className="flex flex-col">
+                            <span>
+                              {item.tenViTri}, {item.tinhThanh}
+                            </span>
+                            <span className="text-gray-500 font-400 text-base">
+                              {item.quocGia}
+                            </span>
+                          </p>
+                        </div>
+                        <hr />
                       </div>
-                    </li>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
             {/* bookingDate */}
             <div>
               <section
-                onClick={() => setBookingDate(!bookingDate)}
+                onClick={() => {
+                  setBookingDate(!bookingDate);
+                  setOpenLocation(false);
+                }}
                 className="flex"
               >
                 <div className="border-r">
@@ -140,7 +151,10 @@ const SearchUi = ({
             </div>
             {/* add guess */}
             <div
-              onClick={() => setBookingDate(false)}
+              onClick={() => {
+                setBookingDate(false);
+                setOpenLocation(false);
+              }}
               className="dropdown dropdown-bottom dropdown-end"
             >
               <div
@@ -160,8 +174,10 @@ const SearchUi = ({
               >
                 <div className="flex justify-between items-center text-base">
                   <section>
-                    <p className="font-bold">Người lớn</p>
-                    <p className="text-sm font-normal">Từ 13 tuổi trở lên</p>
+                    <p className="font-600">Người lớn</p>
+                    <p className="text-sm font-normal">
+                      Độ tuổi 13 tuổi trở lên
+                    </p>
                   </section>
                   <AddGuess
                     maxGuess={2}
@@ -170,10 +186,12 @@ const SearchUi = ({
                     setState={setAdults}
                   />
                 </div>
-                <section className="flex justify-between items-center">
+                <section className="flex justify-between items-center text-base">
                   <section>
-                    <p className="font-bold">Trẻ em</p>
-                    <p className="text-sm font-normal">Từ 2 đến 12 tuổi </p>
+                    <p className="font-600">Trẻ em</p>
+                    <p className="text-sm font-normal">
+                      Độ tuổi 2 đến 12 tuổi{" "}
+                    </p>
                   </section>
                   <AddGuess
                     state={children}
@@ -181,9 +199,9 @@ const SearchUi = ({
                     setState={setChildren}
                   />
                 </section>
-                <section className="flex items-center justify-between">
+                <section className="flex items-center justify-between text-base">
                   <section>
-                    <p className="font-bold">Thú cưng</p>
+                    <p className="font-600">Thú cưng</p>
                     <p className="text-sm font-normal">Chó, mèo...</p>
                   </section>
                   <AddGuess isPet state={pet} setState={setPet} />
@@ -194,7 +212,9 @@ const SearchUi = ({
         )}
         <div
           onClick={() => {
-            setOpen(true);
+            dispatch(setAction(true));
+            setOpenLocation(false);
+            setBookingDate(false);
             address && navigate(`/results/${address?.id}`);
           }}
           className="bg-mainColor border-r flex items-center justify-center p-3 rounded-full"
@@ -205,8 +225,9 @@ const SearchUi = ({
           <div
             className="ml-5"
             onClick={() => {
-              setOpen(false);
+              dispatch(setAction(false));
               setBookingDate(false);
+              setOpenLocation(false);
             }}
           >
             <svg

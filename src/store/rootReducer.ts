@@ -28,9 +28,11 @@ import fitlerReducer from "./filterPrice/slice";
 import { deleteCommentReducer } from "./deleteComment/slice";
 import { getMyTripsReducer } from "./my-travel/slice";
 import { huyChuyenReducer } from "./huy-chuyen/slice";
+import { searchReducer } from "./searchSlice/slice";
 
 export const rootReducer = combineReducers({
   fitlerReducer: fitlerReducer,
+  searchReducer: searchReducer,
   deleteCommentReducer: deleteCommentReducer,
   quanLyNguoiDung: quanLyNguoiDungReducer,
   roomByLocationReducer: roomByLocationSlice,

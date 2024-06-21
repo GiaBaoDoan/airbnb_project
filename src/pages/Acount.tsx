@@ -49,6 +49,7 @@ const Account = () => {
     const formData = new FormData();
     formData.append("formFile", file);
     await dispatch(uploadAnhThunk(formData));
+    dispatch(getThongTinUserThunk(id));
   };
   const { myTrips } = useSelector(
     (state: RootState) => state.getMyTripsReducer
@@ -412,7 +413,9 @@ const Account = () => {
       </form>
       {/* my trips */}
       <section className="py-5">
-        <h2 className="text-2xl my-5 font-600">Chuyến đi của bạn</h2>
+        {myTrips.length > 0 && (
+          <h2 className="text-2xl my-5 font-600">Chuyến đi của bạn</h2>
+        )}
         <Swiper
           navigation={true}
           modules={[Navigation]}
