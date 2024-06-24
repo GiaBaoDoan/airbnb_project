@@ -1,9 +1,9 @@
 const Footer = () => {
   return (
     <>
-      <footer className="bg-white border-2 shadow-lg p-[20px]">
-        <div className="max-w-[95% m-auto">
-          <div className="md:flex md:justify-between max-ipad:flex-col space-y-[20px] items-center flex">
+      <footer className="bg-black/5 border-2 shadow-lg py-11">
+        <div className="w-[95%] max-sm:w-[90%] mx-auto">
+          <div className="max-xl:flex-col space-y-11 xl:justify-between items-center max-xl:items-start flex">
             {/* airbnb logo */}
             <section>
               <div className="mb-6 md:mb-0 ">
@@ -26,62 +26,64 @@ const Footer = () => {
                 </a>
               </div>
             </section>
-            <div className="flex flex-col space-y-5">
-              <h3 className="font-600">Đón tiếp khách</h3>
-              <p className="hover:underline cursor-pointer">
-                Cho thuê nhà trên Airbnb
-              </p>
-              <p className="hover:underline cursor-pointer">
-                AirCover cho Chủ nhà
-              </p>
-              <p className="hover:underline cursor-pointer">
-                Tài nguyên về đón tiếp khách
-              </p>
-              <p className="hover:underline cursor-pointer">
-                Diễn đàn cộng đồng
-              </p>
-              <p className="hover:underline cursor-pointer">
-                Đón tiếp khách có trách nhiệm
-              </p>
-              <p className="hover:underline cursor-pointer">
-                Tham gia khóa học miễn phí về công việc Đón tiếp khách
-              </p>
-            </div>
-            <div className="flex flex-col space-y-5">
-              <h3 className="font-600">Đón tiếp khách</h3>
-              <p className="hover:underline cursor-pointer">
-                Cho thuê nhà trên Airbnb
-              </p>
-              <p className="hover:underline cursor-pointer">
-                AirCover cho Chủ nhà
-              </p>
-              <p className="hover:underline cursor-pointer">
-                Tài nguyên về đón tiếp khách
-              </p>
-              <p className="hover:underline cursor-pointer">
-                Diễn đàn cộng đồng
-              </p>
-              <p className="hover:underline cursor-pointer">
-                Đón tiếp khách có trách nhiệm
-              </p>
-              <p className="hover:underline cursor-pointer">
-                Tham gia khóa học miễn phí về công việc Đón tiếp khách
-              </p>
-            </div>
-            <div className="flex flex-col space-y-5">
-              <h3 className="font-600">Airbnb</h3>
-              <p className="hover:underline cursor-pointer">Trang tin tức</p>
-              <p className="hover:underline cursor-pointer">Tính năng mới</p>
-              <p className="hover:underline cursor-pointer">
-                Cơ hội nghề nghiệp
-              </p>
-              <p className="hover:underline cursor-pointer">Nhà đầu tư</p>
-              <p className="hover:underline cursor-pointer">
-                Chỗ ở khẩn cấp Airbnb.org
-              </p>
-              <p className="hover:underline cursor-pointer">
-                Yêu cầu trợ giúp về vấn đề an toàn
-              </p>
+            <div className="grid grid-cols-3 max-sm:grid-cols-1 max-lg:grid-cols-2 gap-7">
+              <div className="flex flex-col space-y-5">
+                <h3 className="font-600 text-base">Đón tiếp khách</h3>
+                <p className="hover:underline cursor-pointer">
+                  Cho thuê nhà trên Airbnb
+                </p>
+                <p className="hover:underline cursor-pointer">
+                  AirCover cho Chủ nhà
+                </p>
+                <p className="hover:underline cursor-pointer">
+                  Tài nguyên về đón tiếp khách
+                </p>
+                <p className="hover:underline cursor-pointer">
+                  Diễn đàn cộng đồng
+                </p>
+                <p className="hover:underline cursor-pointer">
+                  Đón tiếp khách có trách nhiệm
+                </p>
+                <p className="hover:underline cursor-pointer">
+                  Tham gia khóa học miễn phí về công việc Đón tiếp khách
+                </p>
+              </div>
+              <div className="flex flex-col space-y-5">
+                <h3 className="font-600 text-base">Đón tiếp khách</h3>
+                <p className="hover:underline cursor-pointer">
+                  Cho thuê nhà trên Airbnb
+                </p>
+                <p className="hover:underline cursor-pointer">
+                  AirCover cho Chủ nhà
+                </p>
+                <p className="hover:underline cursor-pointer">
+                  Tài nguyên về đón tiếp khách
+                </p>
+                <p className="hover:underline cursor-pointer">
+                  Diễn đàn cộng đồng
+                </p>
+                <p className="hover:underline cursor-pointer">
+                  Đón tiếp khách có trách nhiệm
+                </p>
+                <p className="hover:underline cursor-pointer">
+                  Tham gia khóa học miễn phí về công việc Đón tiếp khách
+                </p>
+              </div>
+              <div className="flex flex-col space-y-5">
+                <h3 className="font-600 text-base">Airbnb</h3>
+                <p className="hover:underline cursor-pointer">Trang tin tức</p>
+                <p className="hover:underline cursor-pointer">Tính năng mới</p>
+                <p className="hover:underline cursor-pointer">
+                  Cơ hội nghề nghiệp
+                </p>
+                <p className="hover:underline cursor-pointer">Nhà đầu tư</p>
+                <p className="hover:underline cursor-pointer">
+                  Chỗ ở khẩn cấp Airbnb.org
+                </p>
+                <p className="hover:underline cursor-pointer">
+                  Yêu cầu trợ giúp về vấn đề an toàn
+                </p>
+              </div>
             </div>
             {/* footer-contet-right */}
           </div>
@@ -91,27 +93,29 @@ const Footer = () => {
           <hr />
           <br />
           <section>
-            <div className="flex justify-between">
-              <div className="space-x-3">
+            <div className="flex justify-between max-xl:flex-col max-xl:space-y-5">
+              <div className="flex lg:space-x-3 max-lg:space-y-3 items-start max-lg:flex-col">
                 <span className="text-base sm:text-center dark:text-gray-400">
                   © 2023 <a className="hover:underline">Airbnb™</a>. All Rights
                   Reserved.
                 </span>
-                <span className="text-base sm:text-center dark:text-gray-400">
-                  Quyền riêng tư ~
-                </span>
-                <span className="text-base sm:text-center dark:text-gray-400">
-                  Điều khoản ~
-                </span>
-                <span className="text-base sm:text-center dark:text-gray-400">
-                  Sơ đồ trang web
-                </span>
+                <div>
+                  <span className="text-base sm:text-center dark:text-gray-400">
+                    Quyền riêng tư ~
+                  </span>
+                  <span className="text-base sm:text-center dark:text-gray-400">
+                    Điều khoản ~
+                  </span>
+                  <span className="text-base sm:text-center dark:text-gray-400">
+                    Sơ đồ trang web
+                  </span>
+                </div>
                 <div className="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
                   {/* hình ở đây */}
                 </div>
               </div>
-              <div className="space-x-3 flex">
-                <span className="text-base flex sm:text-center font-500 space-x-2 items-center dark:text-gray-400">
+              <div className="grid grid-cols-3 max-sm:grid-cols-2 gap-5">
+                <span className="text-base space-x-8 flex font-500 items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -122,23 +126,16 @@ const Footer = () => {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="lucide lucide-globe"
+                    className="lucide max-sm:h-3 max-sm:w-3 lucide-globe"
                   >
                     <circle cx="12" cy="12" r="10" />
                     <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
                     <path d="M2 12h20" />
-                  </svg>{" "}
+                  </svg>
                   <span>Tiếng việt (VN)</span>
                 </span>
-                <span className="text-base font-500 sm:text-center dark:text-gray-400">
-                  $ USD
-                </span>
-                <span className="text-base font-500 sm:text-center dark:text-gray-400">
-                  Hỗ trợ tài nguyên
-                </span>
-                <div className="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
-                  {/* hình ở đây */}
-                </div>
+                <span className="text-base font-500">$ USD</span>
+                <span className="text-base font-500">Hỗ trợ tài nguyên</span>
               </div>
             </div>
           </section>

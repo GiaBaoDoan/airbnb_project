@@ -1,4 +1,3 @@
-import "animate.css";
 import ExploreNearBy from "components/Ui/ExploreNearBy";
 import LoadingPage from "components/Ui/LoadingPage";
 import ModelRoom from "components/Ui/ModelRoom";
@@ -31,19 +30,20 @@ export const HomeAirbnb = () => {
   if (isFetchingAirbnb) return <LoadingPage />;
   return (
     <section className="pb-12">
-      {/* <BannerImage /> */}
-      <div className="max-w-[95%] mx-auto rounded-xl">
+      <div className="w-[95%] max-sm:w-[90%] mx-auto rounded-xl">
         <article className="flex my-5 justify-between items-center">
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-2xl font-bold max-sm:text-lg">
             AirBnb cung cấp trải nghiệm tốt nhất
           </h2>
         </article>
         <ModelRoom modelRooms={sortRoom} />
         <ExploreNearBy />
-        {/*  */}
+        {/* <BannerImage /> */}
         <section className="py-5">
-          <h3 className="font-bold text-2xl py-5">Sống ở bất kỳ đâu</h3>
-          <div className="grid grid-cols-4 gap-5">
+          <h3 className="font-bold text-2xl max-sm:text-lg py-5">
+            Sống ở bất kỳ đâu
+          </h3>
+          <div className="grid grid-cols-4 max-lg:grid-cols-2  gap-5">
             <img
               src="https://a0.muscache.com/im/pictures/1e16f2f4-1256-44cb-a0f2-85aa57672a45.jpg?im_w=720"
               className="rounded-xl h-full"
@@ -66,23 +66,28 @@ export const HomeAirbnb = () => {
             />
           </div>
         </section>
-        {/* setion */}
-        {/* <section>
-          <video src={video} className="h-[500px] rounded-xl" loop autoPlay>
-            <p className="content">helo các bạn</p>
-          </video>
-        </section> */}
         <section className="py-5">
-          <h3 className="text-2xl font-bold py-5 font-my-font">
+          <h3 className="text-2xl font-bold py-5 max-sm:text-lg font-my-font">
             Trải nghiệm cá nhân
           </h3>
           <Swiper
             cssMode={true}
             navigation={true}
-            slidesPerView={3}
+            slidesPerView={1}
             modules={[Navigation, Pagination]}
             spaceBetween={30}
             slidesOffsetAfter={50}
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+              },
+              1024: {
+                slidesPerView: 2,
+              },
+              1536: {
+                slidesPerView: 3,
+              },
+            }}
             className="mySwiper cursor-pointer"
           >
             {data.map((item, index) => {
@@ -93,13 +98,13 @@ export const HomeAirbnb = () => {
                       src={item.img}
                       className="rounded-xl w-[100%] object-cover h-[400px] "
                     />
-                    <div className="absolute w-[50%] top-5 left-5 font-600 text-2xl text-white">
+                    <div className="absolute w-[50%] max-sm:w-[80%] top-5 left-5 font-600 text-2xl max-sm:text-lg text-white">
                       <p className="text-sm font-my-font font-medium">
                         Bộ siêu tập
                       </p>
                       <p>{item.title}</p>
                     </div>
-                    <div className="absolute bottom-5 hover:bg-white/90 left-5 bg-white p-3 rounded-lg shadow-lg font-600">
+                    <div className="absolute bottom-5 max-sm:text-base hover:bg-white/90 left-5 bg-white p-3 rounded-lg shadow-lg font-600">
                       <button>Hiển thị tất cả</button>
                     </div>
                   </div>

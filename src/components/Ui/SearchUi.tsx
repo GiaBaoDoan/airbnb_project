@@ -32,12 +32,11 @@ const SearchUi = () => {
   useEffect(() => {
     dispatch(getLocationThunk());
   }, []);
-  console.log(open);
   return (
     <section className={`cursor-pointer z-[100] transition-all`}>
       <div
         className={`border flex  shadow pr-5 hover:shadow-md transition-all  items-center rounded-full ${
-          open ? "scale-110 translate-y-[20px] " : ""
+          open ? "scale-105 translate-y-[20px] " : ""
         }`}
       >
         {!open && (
@@ -63,10 +62,10 @@ const SearchUi = () => {
             >
               <div
                 onClick={() => setOpenLocation(true)}
-                className="p-3  hover:bg-black/5 w-[200px] relative px-7 space-y-4 h-full rounded-full"
+                className="p-3  hover:bg-blac k/5 w-[200px] relative px-7 space-y-4 h-full rounded-full"
               >
                 <p>{address ? address?.tenViTri : "Địa điểm tìm kiếm"}</p>
-                <p className="font-normal text-sm">
+                <p className="font-normal line-clamp-1 text-sm">
                   {address && (
                     <span>
                       {address.tinhThanh}, {address.tenViTri}

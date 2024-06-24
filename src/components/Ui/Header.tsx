@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import HeaderRps from "./HeaderRps";
 type Feature = {
   text: string;
   val: string;
@@ -66,7 +67,7 @@ export const Header = () => {
   return (
     <CssContainer className="sticky top-0 bg-white z-[12]">
       <header>
-        <div className="border top-header shadow">
+        <div className="border max-xl:hidden top-header shadow">
           <div
             className={`flex ${
               open ? "h-[200px]" : "h-[100px]"
@@ -75,8 +76,10 @@ export const Header = () => {
             <LogoIcon />
             <SearchUi />
             <div className="flex space-x-5 items-center">
-              <h4>Cho thuê chỗ ở qua Airbnb</h4>
-              <Icon className="cursor-pointer" />
+              <div className="flex items-center space-x-3">
+                <h4>Cho thuê chỗ ở qua Airbnb</h4>
+                <Icon className="cursor-pointer" />
+              </div>
               <div className="dropdown dropdown-bottom  dropdown-end">
                 <div tabIndex={1}>
                   <div className="flex items-center transition-all shadow hover:shadow-md cursor-pointer border justify-between space-x-3 rounded-full px-5 p-3">
@@ -174,13 +177,14 @@ export const Header = () => {
             </div>
           </div>
         </div>
-        <div className="flex shadow pt-5 border-b space-x-3">
-          <div className="w-[90%]">
+        <HeaderRps />
+        <div className="flex shadow bg-white mx-auto pt-5 border-b space-x-3">
+          <div className="w-[90%] max-xl:w-[85%] max-lg:w-[80%] max-sm:w-full">
             <IconsSwipper />
           </div>
           <div
             onClick={() => modalRef?.current?.showModal()}
-            className="border hover:bg-black/5 border-gray-400 h-full flex cursor-pointer items-center space-x-3 p-3 rounded-xl"
+            className="border max-sm:hidden hover:bg-black/5 border-gray-400 h-full flex cursor-pointer items-center space-x-3 p-3 rounded-xl"
           >
             <Filter />
             <span className="font-semibold">Bộ lọc</span>

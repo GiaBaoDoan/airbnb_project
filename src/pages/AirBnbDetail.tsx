@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { RootState, useAppDispath } from "store";
 import RatingStar from "../JSON/RatingStar.json";
@@ -19,6 +19,7 @@ const AirBnbDetail = () => {
   const { Airbnbcomment } = useSelector(
     (state: RootState) => state.quanlyairbnbComment
   );
+  const commentRef = useRef<HTMLElement | null>(null);
   const { location } = useSelector(
     (state: RootState) => state.getLocationReducer
   );
@@ -41,11 +42,11 @@ const AirBnbDetail = () => {
   }, []);
   if (detailRoomLoading) return <LoadingPage />;
   return (
-    <main className="pb-12 pt-5 w-[95%] mx-auto">
-      <div className="pb-5">
-        <article className="flex justify-between items-center">
-          <div>
-            <div className="flex items-center space-x-3">
+    <main className="pb-12 sm:pt-5 max-sm:w-[90%] w-[95%] mx-auto">
+      <div className="pb-7">
+        <article className="flex lg:justify-between items-center">
+          <div className="flex-1">
+            <div className="flex space-x-3 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -56,25 +57,56 @@ const AirBnbDetail = () => {
               >
                 <path d="M9 0a1 1 0 0 1 1 .88V6h5a1 1 0 0 1 1 .88V15a1 1 0 0 1-.88 1H7a1 1 0 0 1-1-.88V10H1a1 1 0 0 1-1-.88V1a1 1 0 0 1 .88-1H9zm1.73 7-1.4.5.24.21.13.13c.12.13.23.25.3.36l.08.1.05.07.04.08H7.31v1.3h1.2l.17.53.1.26.1.3A6.3 6.3 0 0 0 10 12.61c-.5.32-1.12.61-1.87.87l-.33.11-.35.11-.44.14.72 1.15.4-.13.4-.12c1-.35 1.83-.76 2.48-1.22.57.4 1.28.77 2.12 1.08l.37.14.38.12.41.13.72-1.15-.45-.14-.26-.08-.34-.11a9.23 9.23 0 0 1-1.94-.9 6.3 6.3 0 0 0 1.07-1.7l.13-.31.11-.33.17-.52h1.2V8.45h-3.05l-.1-.23A3.7 3.7 0 0 0 11 7.3l-.12-.15-.14-.15zm1.35 2.76-.04.13-.08.22-.1.27a4.99 4.99 0 0 1-.86 1.38 4.95 4.95 0 0 1-.74-1.13l-.12-.25-.1-.27-.08-.22-.04-.13h2.16zM9 1H1v8h5V7l.01-.17H3.83L3.43 8H2l2.26-6h1.48l1.5 4H9V1zM5 3.41 4.25 5.6h1.5L5 3.41z"></path>
               </svg>
-              <h2 className="font-semibold text-3xl py-5">
+              <h2 className="font-semibold text-3xl max-lg:text-2xl max-sm:text-lg py-5">
                 {detailRoom?.tenPhong}
               </h2>
             </div>
             {detailLocation && (
-              <div className="flex items-center space-x-3">
-                <img
-                  className="w-9 h-9 rounded-full"
-                  src={detailLocation?.hinhAnh}
-                  alt=""
-                />
-                <span className="font-600 text-lg">
-                  {detailLocation?.tenViTri} - {detailLocation?.tinhThanh} -{" "}
-                  {detailLocation?.quocGia}
-                </span>
+              <div className="flex max-sm:flex-col justify-between w-full">
+                <div className="flex flex-1 space-x-3 items-center">
+                  <img
+                    className="w-9 h-9 max-sm:h-7 max-sm:w-7 object-cover rounded-full"
+                    src={detailLocation?.hinhAnh}
+                    alt=""
+                  />
+                  <span className="font-600 text-lg max-sm:text-base">
+                    {detailLocation?.tenViTri} - {detailLocation?.tinhThanh} -{" "}
+                    {detailLocation?.quocGia}
+                  </span>
+                </div>
+                <section className="flex max-sm:hidden lg:hidden justify-between max-sm:text-base text-lg space-x-5 items-center">
+                  <div className="flex items-center space-x-8 underline">
+                    <svg
+                      viewBox="0 0 32 32"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                      role="presentation"
+                      focusable="false"
+                      strokeWidth={2}
+                      stroke="black"
+                      overflow="visible"
+                      className="w-5 h-5 "
+                    >
+                      <path
+                        d="m27 18v9c0 1.1046-.8954 2-2 2h-18c-1.10457 0-2-.8954-2-2v-9m11-15v21m-10-11 9.2929-9.29289c.3905-.39053 1.0237-.39053 1.4142 0l9.2929 9.29289"
+                        fill="none"
+                      ></path>
+                    </svg>
+                    <span className="font-600 max-sm:text-base">Chia sẻ</span>
+                  </div>
+                  <div className="flex items-center space-x-8 underline">
+                    <Heart
+                      stroke="rgba(0,0,0,1)"
+                      fill="none"
+                      className="w-5 h-5 "
+                    />
+                    <span className="font-600">Lưu</span>
+                  </div>
+                </section>
               </div>
             )}
           </div>
-          <section className="flex text-lg space-x-5 items-center">
+          <section className="flex max-lg:hidden text-lg space-x-5 items-center">
             <div className="flex items-center space-x-8 underline">
               <svg
                 viewBox="0 0 32 32"
@@ -102,16 +134,47 @@ const AirBnbDetail = () => {
         </article>
       </div>
       <img
-        className="rounded-3xl object-cover shadow-lg w-full"
+        className="rounded-xl object-cover shadow-lg h-full w-full"
         src={detailRoom?.hinhAnh}
         alt="../"
       />
-      <div className="grid-cols-3 grid gap-5">
-        <div className="col-span-2">
+      <section className="flex sm:hidden py-3 justify-between max-sm:text-base text-lg space-x-5 items-center">
+        <div className="flex items-center space-x-8 underline">
+          <svg
+            viewBox="0 0 32 32"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            role="presentation"
+            focusable="false"
+            strokeWidth={2}
+            stroke="black"
+            overflow="visible"
+            className="w-5 h-5 max-sm:w-[16px] max-sm:h-[16px]"
+          >
+            <path
+              d="m27 18v9c0 1.1046-.8954 2-2 2h-18c-1.10457 0-2-.8954-2-2v-9m11-15v21m-10-11 9.2929-9.29289c.3905-.39053 1.0237-.39053 1.4142 0l9.2929 9.29289"
+              fill="none"
+            ></path>
+          </svg>
+          <span className="font-600 ">Chia sẻ</span>
+        </div>
+        <div className="flex items-center space-x-8 underline">
+          <Heart
+            stroke="rgba(0,0,0,1)"
+            fill="none"
+            className="w-5 h-5 max-sm:w-[16px] max-sm:h-[16px]"
+          />
+          <span className="font-600 ">Lưu</span>
+        </div>
+      </section>
+      <div className="grid-cols-3 grid gap-5 max-xl:grid-cols-1">
+        <div className="xl:col-span-2">
           <section className="py-5">
             <div className="text-lg space-y-3">
-              <h3 className="font-bold text-2xl">Phòng cung cấp những gì</h3>
-              <p className="space-x-3 font-medium">
+              <h3 className="font-bold text-2xl max-sm:text-lg ">
+                Phòng cung cấp những gì
+              </h3>
+              <p className="space-x-3 font-medium max-sm:text-base">
                 <span>{detailRoom?.khach} Khách</span>
                 <span>{detailRoom?.phongNgu} Phòng ngủ</span>
                 <span>{detailRoom?.giuong} giường</span>
@@ -120,45 +183,68 @@ const AirBnbDetail = () => {
             </div>
             <br />
             {Number(id) >= 5 && Number(id) <= 12 ? (
-              <div className="border p-7 w-[90%] border-gray-300 items-center text-xl text-center font-600 rounded-lg my-5 flex space-x-5 justify-between">
-                <p className="flex items-center">
+              <div
+                onClick={() => {
+                  commentRef?.current.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }}
+                className="border p-7 max-sm:px-3 w-[90%] max-xl:w-full border-gray-300 items-center  text-xl text-center font-600 rounded-lg my-5 flex space-x-5 justify-between"
+              >
+                <div className="flex items-center">
                   <img
+                    className="object-contain max-sm:w-9 max-sm:h-9"
                     src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/pdp-shared/components/LaurelItem/ic-system-gf-gold-left-laurel-32-3x.d074c7557225d2a0f3f1289a3dde7a7d.png"
                     alt=""
                   />
-                  Được khách <br /> yêu thích
+                  <span className="max-sm:text-sm">
+                    Được khách <br /> yêu thích
+                  </span>
                   <img
+                    className="object-contain max-sm:w-9 max-sm:h-9"
                     src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/pdp-shared/components/LaurelItem/ic-system-gf-gold-right-laurel-32-3x.f972b95c999d29e144d9ef970585906d.png"
                     alt=""
                   />
-                </p>
-                <p>
+                </div>
+                <p className="max-lg:hidden">
                   Khách đánh giá đây là một <br />
                   trong những ngôi nhà được <br />
                   yêu thích nhất trên AirBnb
                 </p>
-                <div className="text-lg font-600">
-                  <span className="font-bold text-xl">{pointStar}</span>
+                <div className="text-lg font-500">
+                  <span className="font-500 max-sm:text-base">{pointStar}</span>
                   <div className="flex space-x-4">
                     {Array.from({ length: 5 }).map((_, index) => (
-                      <Star key={index} />
+                      <Star
+                        className="max-lg:!w-3 max-lg:!h-3 max-sm:!w-6 max-sm:!h-6"
+                        key={index}
+                      />
                     ))}
                   </div>
                 </div>
-                <div>
-                  <p className="text-xl font-bold">{Airbnbcomment.length}</p>{" "}
-                  <span className="text-base underline font-600">Đánh giá</span>
+                <div className="flex flex-col">
+                  <p className="text-xl max-sm:text-base">
+                    {Airbnbcomment.length}
+                  </p>
+                  <span className="underline max-sm:text-xs">Đánh giá</span>
                 </div>
               </div>
             ) : (
-              <div className="font-600 flex items-center space-x-3 text-lg">
-                <div className="flex items-center space-x-2">
+              <div className="flex font-500 items-center space-x-3 text-lg max-sm:justify-between max-sm:text-base">
+                <div className="flex items-center space-x-4">
                   <span>
-                    <Star />
+                    <Star className="max-sm:!w-3 max-sm:h-3" />
                   </span>
                   <span>{pointStar}</span>
                 </div>
-                <span className="underline">
+                <span
+                  onClick={() => {
+                    commentRef?.current.scrollIntoView({
+                      behavior: "smooth",
+                    });
+                  }}
+                  className="underline"
+                >
                   {Airbnbcomment?.length} lượt đánh giá
                 </span>
               </div>
@@ -167,13 +253,15 @@ const AirBnbDetail = () => {
             <hr />
             <div className="py-5 flex items-center space-x-5">
               <img
-                className="w-16 h-16"
+                className="w-16 h-16 max-sm:h-11 max-sm:w-11"
                 src="https://cdn-icons-png.flaticon.com/512/5556/5556468.png"
                 alt=""
               />
               <div className="text-lg space-y-6">
-                <p className="font-bold text-xl">Chủ nhà/ Người tổ chức: Ken</p>
-                <p className="text-gray-500">
+                <p className="font-bold text-xl max-sm:text-base">
+                  Chủ nhà/ Người tổ chức: Ken
+                </p>
+                <p className="text-gray-500 max-sm:text-base">
                   Chủ nhà siêu cấp với - 2 năm kinh nghiệm đón khách
                 </p>
               </div>
@@ -181,22 +269,24 @@ const AirBnbDetail = () => {
           </section>
           <hr />
           {/* Features */}
-          <section className="py-5 text-xl space-y-5">
+          <section className="py-5 text-xl max-sm:text-base space-y-5">
             <div className="flex items-center space-x-5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 32 32"
                 aria-hidden="true"
                 strokeWidth={3}
-                className="h-9 w-9"
+                className="h-9 w-9 max-sm:w-7 max-sm:h-7"
                 role="presentation"
                 focusable="false"
               >
                 <path d="M26 2a1 1 0 0 1 .92.61l.04.12 2 7a1 1 0 0 1-.85 1.26L28 11h-3v5h6v2h-2v13h-2v-2.54a3.98 3.98 0 0 1-1.73.53L25 29H7a3.98 3.98 0 0 1-2-.54V31H3V18H1v-2h5v-4a1 1 0 0 1 .88-1h.36L6.09 8.4l1.82-.8L9.43 11H12a1 1 0 0 1 1 .88V16h10v-5h-3a1 1 0 0 1-.99-1.16l.03-.11 2-7a1 1 0 0 1 .84-.72L22 2h4zm1 16H5v7a2 2 0 0 0 1.7 1.98l.15.01L7 27h18a2 2 0 0 0 2-1.85V18zm-16-5H8v3h3v-3zm14.24-9h-2.49l-1.43 5h5.35l-1.43-5z"></path>
               </svg>
               <div className="space-y-4">
-                <p className="font-bold">Không gian riêng để làm việc</p>
-                <p className="text-gray-500 text-lg">
+                <p className="font-bold text-lg max-sm:text-base">
+                  Không gian riêng để làm việc
+                </p>
+                <p className="text-gray-500 text-lg max-sm:text-base">
                   Một khu vực chung có Wi-fi, phù hợp để làm việc.
                 </p>
               </div>
@@ -209,13 +299,15 @@ const AirBnbDetail = () => {
                 role="presentation"
                 focusable="false"
                 strokeWidth={3}
-                className="h-9 w-9"
+                className="h-9 w-9 max-sm:w-7 max-sm:h-7"
               >
                 <path d="M16 17a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm0 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM25.67.33a2 2 0 0 1 2 1.85v6.54a2 2 0 0 1-.97 1.7l-.14.08-9.67 4.84a2 2 0 0 1-1.61.07l-.17-.07-9.67-4.84a2 2 0 0 1-1.1-1.62V2.33a2 2 0 0 1 1.84-2h.15zm0 2H6.33v6.39L16 13.55l9.67-4.83z"></path>
               </svg>
               <div className="space-y-4">
-                <p className="font-bold">Chủ nhà siêu cấp</p>
-                <p className="text-gray-500 text-lg">
+                <p className="font-bold text-lg max-sm:text-base">
+                  Chủ nhà siêu cấp
+                </p>
+                <p className="text-gray-500 text-lg max-sm:text-base">
                   Chủ nhà siêu cấp là những Chủ nhà dày dạn kinh nghiệm, được
                   đánh giá cao.
                 </p>
@@ -229,13 +321,15 @@ const AirBnbDetail = () => {
                 role="presentation"
                 focusable="false"
                 strokeWidth={3}
-                className="h-9 w-9"
+                className="h-9 w-9 max-sm:w-7 max-sm:h-7"
               >
                 <path d="M16 0a12 12 0 0 1 12 12c0 6.34-3.81 12.75-11.35 19.26l-.65.56-1.08-.93C7.67 24.5 4 18.22 4 12 4 5.42 9.4 0 16 0zm0 2C10.5 2 6 6.53 6 12c0 5.44 3.25 11.12 9.83 17.02l.17.15.58-.52C22.75 23 25.87 17.55 26 12.33V12A10 10 0 0 0 16 2zm0 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
               </svg>
               <div className="space-y-4">
-                <p className="font-bold">Địa điểm tuyệt vời</p>
-                <p className="text-gray-500 text-lg">
+                <p className="font-bold text-lg max-sm:text-base">
+                  Địa điểm tuyệt vời
+                </p>
+                <p className="text-gray-500 text-lg max-sm:text-base">
                   92% khách gần đây đã xếp hạng 5 sao cho vị trí này.
                 </p>
               </div>
@@ -244,50 +338,56 @@ const AirBnbDetail = () => {
           <hr />
           {/* cover */}
           <section className="py-5 space-y-3">
-            <div className="text-2xl font-bold ">
+            <div className="text-2xl max-sm:text-lg font-bold ">
               <span className="text-mainColor">Air</span>
               <span className="text-black">Cover</span>
             </div>
-            <p className="text-lg">
+            <p className="text-lg max-sm:text-base">
               Mọi thông tin của phòng đều sẽ được bảo vệ miễn phí, Trường hợp
               nếu thông tin chủ phòng không chính xác thì hãy nhanh chóng liên
               hệ với chúng tôi, để có thể giải quyết sớm nhất
             </p>
-            <p className="font-bold underline text-lg cursor-pointer">
+            <p className="font-bold underline text-lg max-sm:text-base cursor-pointer">
               Tìm hiểu thêm
             </p>
           </section>
           <hr />
           {/* Introdcue */}
           <section className="py-5 space-y-3">
-            <h3 className="text-2xl font-bold">Giới thiệu về chỗ này</h3>
+            <h3 className="text-2xl max-sm:text-lg font-bold">
+              Giới thiệu về chỗ này
+            </h3>
             <div>
-              <p className="text-lg">{detailRoom?.moTa}</p>
+              <p className="text-lg max-sm:text-base">{detailRoom?.moTa}</p>
             </div>
           </section>
           <hr />
           <section className="py-5 space-y-3">
-            <h3 className="text-2xl font-bold">Nơi bạn sẽ ngủ nghỉ</h3>
-            <div className="grid grid-cols-2 gap-5">
+            <h3 className="text-2xl max-sm:text-lg font-bold">
+              Nơi bạn sẽ ngủ nghỉ
+            </h3>
+            <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-5">
               <div className="h-full">
                 <img
-                  className="rounded-xl h-[300px]"
+                  className="rounded-xl object-cover h-[300px]"
                   src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNTQ0NTEyMzEwMTI3NDg1MQ%3D%3D/original/bd73f0f8-9057-4bbc-ad70-1db13eb5c03f.png?im_w=1440&im_q=highq"
                   alt=""
                 />
-                <div className="mt-3 text-lg">
-                  <h4 className="font-bold text-xl">Phòng ngủ</h4>
+                <div className="mt-3 text-lg max-sm:text-base">
+                  <h4 className="font-bold text-xl max-sm:text-base">
+                    Phòng ngủ
+                  </h4>
                   <p>1 giường ngủ king</p>
                 </div>
               </div>
               <div className="h-full">
                 <img
-                  className="rounded-xl h-[300px]"
+                  className="rounded-xl object-cover h-[300px]"
                   src="https://a0.muscache.com/im/pictures/77c1f77d-fb4a-425d-8ef1-33d4bdcba8d1.jpg?im_w=720"
                   alt=""
                 />
-                <div className="mt-3 text-lg">
-                  <h4 className="font-bold text-xl">Phòng khách</h4>
+                <div className="mt-3 text-lg max-sm:text-base">
+                  <h4 className="font-bold">Phòng khách</h4>
                   <p>1 sofa giường</p>
                 </div>
               </div>
@@ -295,7 +395,9 @@ const AirBnbDetail = () => {
           </section>
           {/* products */}
           <section className="py-5 space-y-5">
-            <h3 className="text-2xl font-bold">Nơi này có những gì cho bạn</h3>
+            <h3 className="text-2xl max-sm:text-lg font-bold">
+              Nơi này có những gì cho bạn
+            </h3>
             <div className="grid-cols-2 grid gap-5">
               <p
                 className={`${
@@ -449,11 +551,10 @@ const AirBnbDetail = () => {
                 <span>Máy giặt phí Đã thanh toán – Trong toà nhà</span>
               </p>
             </div>
-            <button className="border rounded-lg hover:bg-black/5 cursor-pointer text-lg border-gray-500 p-3 flex items-center justify-center font-600">
+            <button className="border rounded-lg hover:bg-black/5 cursor-pointer text-lg max-sm:text-base border-gray-500 p-3 flex items-center justify-center font-600">
               <h4>Hiển thị 66 tiện nghi</h4>
             </button>
           </section>
-          <hr />
         </div>
         {/* paymentcheckout */}
         <Payment
@@ -463,15 +564,15 @@ const AirBnbDetail = () => {
         />
         {/* comments */}
       </div>
-      <section className="space-y-5  py-12">
-        <article className="flex font-bold text-xl items-center space-x-6">
+      <section className="space-y-5 py-12 max-lg:py-5">
+        <article className="flex font-bold text-xl max-sm:text-lg items-center space-x-3">
           <Star />
           <span>{pointStar}</span>
           <span className="font-bold">
             {Airbnbcomment.length} lượt đánh giá
           </span>
         </article>
-        <div className="flex justify-between text-lg font-600 py-5">
+        <div className="flex justify-between max-lg:hidden text-lg font-600 py-5">
           <div className="flex flex-col">
             <p>Xếp hạng tổng thể</p>
             <div className="mt-1">
@@ -493,7 +594,7 @@ const AirBnbDetail = () => {
               aria-hidden="true"
               role="presentation"
               strokeWidth={3}
-              className="h-9 w-9"
+              className="h-9 w-9 max-sm:w-7 max-sm:h-7"
               focusable="false"
             >
               <path d="M24 0v6h-4.3c.13 1.4.67 2.72 1.52 3.78l.2.22-1.5 1.33a9.05 9.05 0 0 1-2.2-5.08c-.83.38-1.32 1.14-1.38 2.2v4.46l4.14 4.02a5 5 0 0 1 1.5 3.09l.01.25.01.25v8.63a3 3 0 0 1-2.64 2.98l-.18.01-.21.01-12-.13A3 3 0 0 1 4 29.2L4 29.02v-8.3a5 5 0 0 1 1.38-3.45l.19-.18L10 12.9V8.85l-4.01-3.4.02-.7A5 5 0 0 1 10.78 0H11zm-5.03 25.69a8.98 8.98 0 0 1-6.13-2.41l-.23-.23A6.97 6.97 0 0 0 6 21.2v7.82c0 .51.38.93.87 1H7l11.96.13h.13a1 1 0 0 0 .91-.88l.01-.12v-3.52c-.34.04-.69.06-1.03.06zM17.67 2H11a3 3 0 0 0-2.92 2.3l-.04.18-.01.08 3.67 3.1h2.72l.02-.1a4.29 4.29 0 0 1 3.23-3.4zM30 4a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-3-2a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-5 0h-2.33v2H22zm8-2a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM20 20.52a3 3 0 0 0-.77-2l-.14-.15-4.76-4.61v-4.1H12v4.1l-5.06 4.78a3 3 0 0 0-.45.53 9.03 9.03 0 0 1 7.3 2.34l.23.23A6.98 6.98 0 0 0 20 23.6z"></path>
@@ -586,8 +687,10 @@ const AirBnbDetail = () => {
           </div>
         </div>
       </section>
-      <hr />
-      <Comments />
+
+      <section ref={commentRef}>
+        <Comments />
+      </section>
     </main>
   );
 };

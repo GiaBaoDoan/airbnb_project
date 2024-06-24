@@ -2,12 +2,14 @@ import { Header } from "../Ui/Header";
 import { Outlet } from "react-router-dom";
 import Footer from "../Ui/Footer";
 import styled from "styled-components";
+import BackToTop from "../Ui/BackToTop";
 const MainLayOut = () => {
   return (
-    <CssContainer className="font-my-font">
+    <CssContainer className="font-my-font relative">
       <Header />
       <Outlet />
       <Footer />
+      <BackToTop />
     </CssContainer>
   );
 };

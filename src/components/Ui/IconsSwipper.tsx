@@ -14,7 +14,18 @@ const IconsSwipper = () => {
         slidesPerGroup={4}
         modules={[Pagination, Navigation]}
         className="mySwiper"
-        slidesPerView={12}
+        slidesPerView={4}
+        breakpoints={{
+          768: {
+            slidesPerView: 5,
+          },
+          1024: {
+            slidesPerView: 8,
+          },
+          1536: {
+            slidesPerView: 10,
+          },
+        }}
       >
         <div>
           {IconsData.map((icon, index) => {
@@ -22,14 +33,18 @@ const IconsSwipper = () => {
               <SwiperSlide
                 onClick={() => setActiveIcon(index)}
                 key={index}
-                className={`transition-all border-b-[2px] pb-3 border-transparent font-medium hover:opacity-100 hover:border-gray-400  cursor-pointer ${
-                  index === activeIcon ? "!border-black" : ""
+                className={`transition-all border-b-[2px] pb-3 max-sm:pb-6 border-transparent font-medium hover:opacity-100 hover:border-gray-400  cursor-pointer ${
+                  index === activeIcon ? " !border-black" : ""
                 }`}
               >
                 <div className="flex flex-col space-y-3 justify-center items-center">
-                  <img src={icon.name} className="w-7 h-7" alt="" />
+                  <img
+                    src={icon.name}
+                    className="w-7 h-7 max-sm:w-5 max-sm:h-5"
+                    alt=""
+                  />
                   <span
-                    className={`text-sm font-600 transition-all  ${
+                    className={`text-sm font-600 line-clamp-1 transition-all  ${
                       activeIcon === index ? "opacity-100" : "opacity-80"
                     } `}
                   >

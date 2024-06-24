@@ -35,19 +35,38 @@ const ResultPage = () => {
     dispatch(setAction(false));
   }, [id]);
   if (isPending) return <LoadingPage />;
-
   return (
-    <main className="w-[95%] py-12  mx-auto">
+    <main className="w-[95%] max-sm:w-[90%] py-5  mx-auto">
       {(roomByLocation.length && sortRoom.length) > 0 ? (
-        <div className="space-y-5">
-          <h3 className="text-2xl font-600">
+        <div className="space-y-5 max-sm:space-y-3">
+          <div className="text-2xl max-sm:text-lg font-600">
             {detailLocation && (
-              <p>
-                Kết quả tìm thấy {detailLocation?.tenViTri},{" "}
-                {detailLocation?.tinhThanh}
-              </p>
+              <div className="sm:space-y-3">
+                <p className="font-600 text-lg max-sm:text-base">
+                  {sortRoom.length} kết quả hiển thị
+                </p>
+                <p>
+                  {detailLocation?.tenViTri}, {detailLocation?.tinhThanh}
+                </p>
+              </div>
             )}
-          </h3>
+          </div>
+          {detailLocation && (
+            <div className="sm:space-x-3 max-sm:space-y-5">
+              <button className="rounded-lg max-sm:mx-1 hover:bg-black/10 border-black/60 border text-sm p-8 px-5 font-600 bg-black/5">
+                Điểm đến
+              </button>
+              <button className="p-8 rounded-lg max-sm:mx-1 hover:bg-black/10 px-5 text-sm border-black/60 border font-600 bg-black/5">
+                Nơi ở
+              </button>
+              <button className="p-8 hover:bg-black/10 max-sm:mx-1 rounded-lg text-sm border-black/60 border px-5 bg-black/5 font-600">
+                Du lịch
+              </button>
+              <button className="p-8 hover:bg-black/10 max-sm:mx-1 rounded-lg text-sm border-black/60 border px-5 bg-black/5 font-600">
+                Giá vé
+              </button>
+            </div>
+          )}
           <section className="flex">
             <ModelRoom modelRooms={sortRoom} />
           </section>

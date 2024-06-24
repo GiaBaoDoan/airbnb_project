@@ -45,7 +45,6 @@ const Payment = ({
   const { myTrips } = useSelector(
     (state: RootState) => state.getMyTripsReducer
   );
-  // logicals
   const checkPayment =
     myTrips?.filter((item) => item.maPhong === Number(id)).length > 0;
   const Trip = myTrips?.filter((item) => item.maPhong === Number(id))[0];
@@ -53,8 +52,36 @@ const Payment = ({
     return Math.abs(differenceInDays(date[0].startDate, date[0].endDate));
   };
   const comfirmPay = () => {
-    modalRef?.current?.showModal();
+    if (Number(calcuNight()) < 3) {
+      toast.info("Chọn ít nhất 3 đêm");
+    } else {
+      modalRef?.current?.showModal();
+    }
   };
+  const checkBetweenDate = () => {
+    const compareDate = moment(
+      moment(date[0].startDate).format("DD/MM/YYYY"),
+      "DD/MM/YYYY"
+    );
+    const check = myTrips.filter((item) => {
+      const startDate = moment(
+        moment(item?.ngayDen).format("DD/MM/YYYY"),
+        "DD/MM/YYYY"
+      );
+      const endDate = moment(
+        moment(item?.ngayDi).format("DD/MM/YYYY"),
+        "DD/MM/YYYY"
+      );
+      return (
+        compareDate.isBetween(startDate, endDate) ||
+        compareDate.isSame(startDate) ||
+        compareDate.isSame(endDate)
+      );
+    });
+    return check.length > 0;
+  };
+  const ngayDenDaDat = moment(Trip?.ngayDen).format("DD/MM/YYYY");
+  const ngayDiDaDat = moment(Trip?.ngayDi).format("DD/MM/YYYY");
   const handelPay = async () => {
     const payload: bookRoom = {
       maNguoiDung: ThongTinUser?.id,
@@ -63,19 +90,31 @@ const Payment = ({
       ngayDen: moment(date[0].startDate).toISOString(),
       ngayDi: moment(date[0].endDate).toISOString(),
     };
-    !ThongTinUser || !localStorage.getItem("token")
-      ? toast.error("Bạn cần phải đăng nhập trước")
-      : await dispatch(bookRoomThunk(payload));
-    await dispatch(getMyTrips(String(localStorage.getItem("id"))));
-    modalRef?.current.close();
+    if (!ThongTinUser || !localStorage.getItem("token")) {
+      toast.error("Bạn cần phải đăng nhập trước");
+    } else {
+      if (checkBetweenDate()) {
+        modalRef?.current.close();
+        return toast.error("Lịch đặt đã bị chồng chéo vui lòng kiểm tra lại");
+      } else {
+        await dispatch(bookRoomThunk(payload));
+        dispatch(getMyTrips(String(localStorage.getItem("id"))));
+        modalRef?.current.close();
+      }
+    }
   };
-  // hook
+  const [size, setSize] = useState<number>(window.innerWidth);
+  const checkSize = () => setSize(innerWidth);
   useEffect(() => {
     dispatch(getMyTrips(localStorage.getItem("id")));
+    window.addEventListener("resize", checkSize);
+    return () => {
+      window.removeEventListener("resize", checkSize);
+    };
   }, []);
   return (
     <CSSContainer>
-      <section className="py-5  sticky top-[200px] bottom-0">
+      <section className="py-5 sticky max-xl:max-w-[600px] top-[200px] bottom-0">
         {
           <aside>
             <div className="border-gray-300 bg-white shadow-xl border p-5 rounded-xl">
@@ -105,8 +144,7 @@ const Payment = ({
                   <div className="text-lg font-600">
                     <span className="font-400">Thời gian đi: </span>
                     <span>
-                      {moment(Trip?.ngayDen).format("DD/MM/YYYY")} ~{" "}
-                      {moment(Trip?.ngayDi).format("DD/MM/YYYY")}
+                      {ngayDenDaDat} ~ {ngayDiDaDat}
                     </span>{" "}
                     (
                     <span>
@@ -128,11 +166,15 @@ const Payment = ({
                     >
                       <div className="flex-1 border-r border-gray-400 p-3">
                         <p className="font-600">Nhận phòng</p>
-                        <span>{format(date[0]?.startDate, "dd/MM/yyyy")}</span>
+                        <span>
+                          {moment(date[0]?.startDate).format("DD/MM/YYYY")}
+                        </span>
                       </div>
                       <div className="flex-1 p-3">
                         <p className="font-600">Trả phòng</p>
-                        <span>{format(date[0]?.endDate, "dd/MM/yyyy")}</span>
+                        <span>
+                          {moment(date[0]?.endDate).format("DD/MM/YYYY")}
+                        </span>
                       </div>
                     </div>
                     {bookingDate && (
@@ -143,10 +185,10 @@ const Payment = ({
                         moveRangeOnFirstSelection={false}
                         direction="horizontal"
                         ranges={date}
-                        months={2}
+                        months={size < 750 ? 1 : 2}
                         dateDisplayFormat="dd/MM/yyyy" // Định dạng hiển thị của ngày
                         minDate={new Date()}
-                        className="border absolute top-[50px] right-[0] bg-white z-10 !text-black rounded-xl p-5 shadow"
+                        className="border top-[50px] absolute w-auto right-0 max-xl:left-0 bg-white z-10 !text-black rounded-xl p-5 shadow"
                       ></DateRange>
                     )}
                   </div>
@@ -187,7 +229,9 @@ const Payment = ({
                     >
                       <div className="flex justify-between items-center">
                         <section>
-                          <p className="font-600 text-lg">Người lớn</p>
+                          <p className="font-600 text-lg max-sm:text-base">
+                            Người lớn
+                          </p>
                           <p className="">Độ tuổi từ 13 trở lên</p>
                         </section>
                         <AddGuess
@@ -199,7 +243,9 @@ const Payment = ({
                       </div>
                       <section className="flex justify-between items-center">
                         <section>
-                          <p className="font-600 text-lg">Trẻ em</p>
+                          <p className="font-600 text-lg max-sm:text-base">
+                            Trẻ em
+                          </p>
                           <p className="">Độ tuổi từ 2 đến 12 </p>
                         </section>
                         <AddGuess
@@ -210,12 +256,14 @@ const Payment = ({
                       </section>
                       <section className="flex items-center justify-between">
                         <section>
-                          <p className="font-600 text-lg">Thú cưng</p>
+                          <p className="font-600 text-lg max-sm:text-base">
+                            Thú cưng
+                          </p>
                           <p className="">Chó, mèo...</p>
                         </section>
                         <AddGuess isPet state={pet} setState={setPet} />
                       </section>
-                      <p className="text-sm font-500">
+                      <p className="text- line-clamp-1 font-500">
                         Chỗ ở này cho phép tối đa 14 khách, không tính em bé.
                         Nếu bạn mang theo nhiều hơn 2 thú cưng, vui lòng báo cho
                         Chủ nhà biết.
@@ -227,7 +275,9 @@ const Payment = ({
 
               {/*  */}
               <section className="p-3 flex justify-between items-center">
-                <h3 className="font-medium uppercase">Chính sách hủy bỏ</h3>
+                <h3 className="font-medium uppercase max-sm:text-base">
+                  Chính sách hủy bỏ
+                </h3>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 32 32"
@@ -246,14 +296,16 @@ const Payment = ({
               </section>
               <section className="py-5">
                 <dialog id="my_modal_3" ref={modalRef} className="modal">
-                  <div className="modal-box min-w-[600px]">
+                  <div className="modal-box max-w-[600px] max-sm:h-[600px] max-sm:overflow-y-auto">
                     <form method="dialog">
                       {/* if there is a button in form, it will close the modal */}
                       <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                         ✕
                       </button>
                     </form>
-                    <h3 className="font-bold text-xl">Xác nhận thanh toán</h3>
+                    <h3 className="font-bold text-xl max-sm:text-lg">
+                      Xác nhận thanh toán
+                    </h3>
                     <div className="py-5">
                       <div className="space-y-5">
                         <img
@@ -261,7 +313,7 @@ const Payment = ({
                           src={detailRoom?.hinhAnh}
                           alt=""
                         />
-                        <div className="text-lg space-y-3">
+                        <div className="text-lg max-sm:text-base space-y-3">
                           <p>
                             <span className="font-medium">
                               Ngày đặt phòng:{" "}
@@ -283,12 +335,12 @@ const Payment = ({
                           </p>
                         </div>
                         <hr />
-                        <p className="text-lg font-medium">
+                        <p className="text-lg max-sm:text-base font-medium">
                           {detailRoom?.phongNgu} Phòng ngủ ~{" "}
                           {detailRoom?.phongTam} phòng tắm ~{" "}
                           {detailRoom?.giuong} giường
                         </p>
-                        <section className="pt-5 space-y-5">
+                        <section className="pt-5 space-y-5 max-sm:text-base">
                           <div className="grid-cols-3 grid gap-5">
                             <p
                               className={`${
@@ -449,7 +501,7 @@ const Payment = ({
                           <button
                             onClick={handelPay}
                             disabled={bookingRoomLoading}
-                            className={`bg-black p-3 font-600 rounded-lg text-white ${
+                            className={`bg-black p-3 font-600 max-sm:text-base rounded-lg text-white ${
                               bookingRoomLoading
                                 ? "cursor-no-drop bg-gray-300 "
                                 : ""
@@ -468,14 +520,14 @@ const Payment = ({
                 {!checkPayment ? (
                   <button
                     onClick={comfirmPay}
-                    className="payment w-full p-5 rounded-xl text-xl font-600 text-white"
+                    className="payment w-full p-5 rounded-xl max-sm:p-3 text-xl max-sm:text-lg font-600 text-white"
                   >
                     Thanh toán
                   </button>
                 ) : (
                   <button
                     disabled={true}
-                    className="bg-gray-300 cursor-no-drop w-full p-5 rounded-xl text-xl font-600 text-white"
+                    className="bg-gray-300 cursor-no-drop w-full max-sm:text-lg p-5 max-sm:p-3 rounded-xl text-xl font-600 text-white"
                   >
                     Đã thanh toán
                   </button>
@@ -485,14 +537,14 @@ const Payment = ({
               {/* bill */}
               {!checkPayment && (
                 <section className="py-5 space-y-5">
-                  <p className="underline flex justify-between text-xl">
+                  <p className="underline flex justify-between text-xl max-sm:text-lg">
                     <span>
                       <span>$</span>
                       {detailRoom?.giaTien}x{calcuNight()} đêm
                     </span>
                     <span>${detailRoom?.giaTien * calcuNight()}</span>
                   </p>
-                  <p className="underline flex justify-between text-xl">
+                  <p className="underline flex justify-between text-xl max-sm:text-lg">
                     <span>Phí dịch vụ Airbnb</span>
                     <span>
                       ${(detailRoom?.giaTien * 0.2 * calcuNight()).toFixed(1)}
@@ -501,7 +553,7 @@ const Payment = ({
                 </section>
               )}
               <hr />
-              <section className="py-5 flex text-xl font-semibold justify-between items-center">
+              <section className="py-5 flex text-xl max-sm:text-lg font-semibold justify-between items-center">
                 {checkPayment ? (
                   <span>Đã thanh toán</span>
                 ) : (

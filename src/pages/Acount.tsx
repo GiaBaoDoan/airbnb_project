@@ -21,13 +21,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { getAirbnbListThunk } from "store/quanLyAirbnb/thunk";
 import UserIcon from "components/Ui/icon/UserIcon";
+import LoadingPage from "components/Ui/LoadingPage";
+import { HuyChuyenThunk } from "store/huy-chuyen/thunk";
 const Account = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const { isLoading } = useSelector(
     (state: RootState) => state.CapNhatThongTinReducer
   );
-  const { ThongTinUser } = useSelector(
+  const { ThongTinUser, loadingUser } = useSelector(
     (state: RootState) => state.LayThongTinTinReducer
   );
   const { avatar } = useSelector((state: RootState) => state.UploadAnhReducer);
@@ -40,6 +42,15 @@ const Account = () => {
   const inputRef = useRef<HTMLInputElement>();
   const id = localStorage.getItem("id");
   const dispatch = useAppDispath();
+  const huyChuyen = async (id: string) => {
+    dispatch(HuyChuyenThunk(id))
+      .unwrap()
+      .then(() => {
+        toast.success("Xóa thành công");
+        dispatch(getMyTrips(localStorage.getItem("id")));
+      })
+      .catch((err) => toast.error(err?.response?.data?.content));
+  };
   const handelFiles = async () => {
     let file = inputRef?.current?.files[0];
     if (file.type === ("image/jpeg" || "image/png" || "image/jpg")) {
@@ -112,6 +123,7 @@ const Account = () => {
       navigate("/");
     }
   }, [ThongTinUser]);
+  if (loadingUser) return <LoadingPage />;
   return (
     <AccountCSS className="container py-12">
       {/* modal */}
@@ -425,7 +437,7 @@ const Account = () => {
           {myTrips?.map((trip) => {
             return (
               <SwiperSlide key={trip.id}>
-                <section>
+                <section onClick={() => console.log(trip?.id)}>
                   <div className="cursor-pointer overflow-hidden rounded-tl-xl rounded-tr-xl">
                     <img
                       className="h-[264px] hover:scale-110 transition-all object-cover"
@@ -451,12 +463,17 @@ const Account = () => {
                         {moment(trip.ngayDi).format("DD/MM/YYYY")}
                       </span>
                     </p>
-                    <button
-                      onClick={() => navigate(`/detail/${trip.maPhong}`)}
-                      className="underline font-600"
-                    >
-                      Xem chi tiết
-                    </button>
+                    <div className="flex justify-between">
+                      <button
+                        onClick={() => navigate(`/detail/${trip.maPhong}`)}
+                        className="underline font-600"
+                      >
+                        Xem chi tiết
+                      </button>
+                      <button onClick={() => huyChuyen(String(trip?.id))}>
+                        Hủy chuyến
+                      </button>
+                    </div>
                   </div>
                 </section>
               </SwiperSlide>

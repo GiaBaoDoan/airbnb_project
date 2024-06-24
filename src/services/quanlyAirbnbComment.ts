@@ -14,4 +14,6 @@ export const quanLyAirbnbCommentServices = {
     ),
   deleteComment: (id: number) =>
     api.delete<ApiRespose<myCustomDataType>>(`/binh-luan/${id}`),
+  updateComment: (id: number, payload: any) =>
+    api.put<ApiRespose<myCustomDataType>>(`/binh-luan/${id}`, payload),
 };

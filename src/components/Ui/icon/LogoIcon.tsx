@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
-const LogoIcon = () => {
+const LogoIcon = ({ size }: { size?: string }) => {
   return (
     <Link to={"/"}>
       <svg
-        width="110"
+        width={size || "110"}
         className="text-[#FF385C]"
         height="32"
         style={{ display: "block" }}
