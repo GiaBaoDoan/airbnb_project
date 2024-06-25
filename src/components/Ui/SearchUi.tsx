@@ -33,7 +33,7 @@ const SearchUi = () => {
     dispatch(getLocationThunk());
   }, []);
   return (
-    <section className={`cursor-pointer z-[100] transition-all`}>
+    <section className={`cursor-pointer max-lg:hidden z-[100] transition-all`}>
       <div
         className={`border flex  shadow pr-5 hover:shadow-md transition-all  items-center rounded-full ${
           open ? "scale-105 translate-y-[20px] " : ""
@@ -42,7 +42,7 @@ const SearchUi = () => {
         {!open && (
           <div
             onClick={() => dispatch(setAction(true))}
-            className="flex p-3 space-x-7 px-7"
+            className="flex p-3 space-x-5 px-5"
           >
             <p className="border-r pr-5">
               {address
@@ -62,9 +62,11 @@ const SearchUi = () => {
             >
               <div
                 onClick={() => setOpenLocation(true)}
-                className="p-3  hover:bg-blac k/5 w-[200px] relative px-7 space-y-4 h-full rounded-full"
+                className="p-3  hover:bg-black/5 relative px-5 space-y-4 h-full rounded-full"
               >
-                <p>{address ? address?.tenViTri : "Địa điểm tìm kiếm"}</p>
+                <p className="line-clamp-1">
+                  {address ? address?.tenViTri : "Địa điểm tìm kiếm"}
+                </p>
                 <p className="font-normal line-clamp-1 text-sm">
                   {address && (
                     <span>
@@ -115,7 +117,7 @@ const SearchUi = () => {
                 className="flex"
               >
                 <div className="border-r">
-                  <div className="p-3 hover:bg-black/5 px-7 space-y-4 h-full rounded-full">
+                  <div className="p-3 hover:bg-black/5 px-5 space-y-4 h-full rounded-full">
                     <p>Nhận phòng</p>
                     <p className="font-normal text-sm">
                       {format(date[0]?.startDate, "dd/MM/yyyy")}
@@ -123,7 +125,7 @@ const SearchUi = () => {
                   </div>
                 </div>
                 <div className="border-r">
-                  <div className="p-3 hover:bg-black/5 px-7 space-y-4 rounded-full">
+                  <div className="p-3 hover:bg-black/5 px-5 space-y-4 rounded-full">
                     <p>Trả phòng</p>
                     <p className="font-normal text-sm">
                       {format(date[0]?.endDate, "dd/MM/yyyy")}

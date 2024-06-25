@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <>
-      <footer className="bg-black/5 border-2 shadow-lg py-11">
+      <footer className="bg-black/5 border py-11">
         <div className="w-[95%] max-sm:w-[90%] mx-auto">
           <div className="max-xl:flex-col space-y-11 xl:justify-between items-center max-xl:items-start flex">
             {/* airbnb logo */}

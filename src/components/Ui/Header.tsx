@@ -10,10 +10,9 @@ import featureJson from "../../JSON/FeaturesInRoom.json";
 import Filter from "components/Ui/icon/Filter";
 import { RootState, useAppDispath } from "store";
 import { toast } from "react-toastify";
-
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import HeaderRps from "./HeaderRps";
+import SearchUiRps from "./SearchRps";
 type Feature = {
   text: string;
   val: string;
@@ -67,16 +66,26 @@ export const Header = () => {
   return (
     <CssContainer className="sticky top-0 bg-white z-[12]">
       <header>
-        <div className="border max-xl:hidden top-header shadow">
+        <div className="border top-header shadow">
           <div
             className={`flex ${
               open ? "h-[200px]" : "h-[100px]"
-            }  py-5 font-semibold items-center transition-all mx-auto justify-between w-[95%]`}
+            }  py-5 font-semibold items-center max-lg:!h-[100px] justify-between transition-all mx-auto w-[95%]`}
           >
-            <LogoIcon />
+            <div className="max-sm:hidden">
+              <LogoIcon />
+            </div>
+            <SearchUiRps />
             <SearchUi />
-            <div className="flex space-x-5 items-center">
-              <div className="flex items-center space-x-3">
+            <div
+              onClick={() => modalRef?.current?.showModal()}
+              className="border lg:hidden hover:bg-black/5 border-gray-400 p-3 flex cursor-pointer items-center rounded-lg"
+            >
+              <Filter />
+              <span className="font-semibold"></span>
+            </div>
+            <div className="flex space-x-5 max-lg:hidden items-center">
+              <div className="flex items-center max-2xl:hidden space-x-3">
                 <h4>Cho thuê chỗ ở qua Airbnb</h4>
                 <Icon className="cursor-pointer" />
               </div>
@@ -177,14 +186,13 @@ export const Header = () => {
             </div>
           </div>
         </div>
-        <HeaderRps />
         <div className="flex shadow bg-white mx-auto pt-5 border-b space-x-3">
-          <div className="w-[90%] max-xl:w-[85%] max-lg:w-[80%] max-sm:w-full">
+          <div className="w-[90%] max-xl:w-full">
             <IconsSwipper />
           </div>
           <div
             onClick={() => modalRef?.current?.showModal()}
-            className="border max-sm:hidden hover:bg-black/5 border-gray-400 h-full flex cursor-pointer items-center space-x-3 p-3 rounded-xl"
+            className="border max-xl:hidden hover:bg-black/5 border-gray-400 h-full flex cursor-pointer items-center space-x-3 p-3 rounded-xl"
           >
             <Filter />
             <span className="font-semibold">Bộ lọc</span>
@@ -199,7 +207,7 @@ export const Header = () => {
             </form>
             <h3 className="font-bold text-lg">Bộ lọc</h3>
             <div className="my-5">
-              <div className="text-lg">
+              <div className="text-lg max-sm:text-base">
                 <div className="flex space-x-3">
                   <span>
                     Giá{" "}
@@ -239,7 +247,7 @@ export const Header = () => {
               </div>
             </div>
             <div className="my-5">
-              <div className="text-lg">
+              <div className="text-lg max-sm:text-base">
                 <div className="flex items-center space-x-3">
                   <span>
                     Giá{" "}
@@ -280,13 +288,15 @@ export const Header = () => {
             </div>
             <hr />
             <div className="py-5 ">
-              <span className="font-600 text-lg">Tính năng cho căn phòng</span>
+              <span className="font-600 text-lg max-sm:text-base">
+                Tính năng cho căn phòng
+              </span>
               <div className="flex flex-wrap gap-5 mt-5">
                 {featureJson?.map((item) => (
                   <button
                     key={item.val}
                     onClick={() => handelFeature(item)}
-                    className={`flex space-x-4 items-center ${
+                    className={`flex sm:space-x-4 space-x-2  items-center ${
                       active.includes(item) ? "bg-black text-white" : "bg-white"
                     } border px-5 py-3 rounded-xl font-500 text-sm`}
                   >
@@ -317,7 +327,7 @@ export const Header = () => {
             <div className="flex justify-between items-center mt-5">
               <button
                 onClick={handelFilter}
-                className="bg-black/100 px-7 font-600 rounded-lg py-3 text-white"
+                className="bg-black/100 px-7 max-sm:px-5 font-600 rounded-lg py-3 text-white"
               >
                 Lọc
               </button>

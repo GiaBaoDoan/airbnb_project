@@ -8,6 +8,9 @@ import ListRoom from "pages/ListRoom";
 import MainLayOut from "components/layouts/MainLayout";
 import ResultPage from "pages/ResultPage";
 import AirBnbDetail from "pages/AirBnbDetail";
+import MyTrip from "pages/MyTrip";
+import LoveList from "pages/LoveList";
+import Messages from "pages/Messages";
 export const router: RouteObject[] = [
   {
     element: <AuthLayout />,
@@ -44,6 +47,18 @@ export const router: RouteObject[] = [
       {
         path: "/account",
         element: <Account />,
+      },
+      {
+        path: "/my-trip",
+        element: <MyTrip />,
+      },
+      {
+        path: "/love-list",
+        element: <LoveList />,
+      },
+      {
+        path: "/messages",
+        element: <Messages />,
       },
     ],
   },

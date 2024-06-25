@@ -22,7 +22,7 @@ const BackToTop = () => {
       onClick={scrollToTop}
       className={`${
         visible ? "opacity-100" : "opacity-0"
-      } fixed rounded-lg bg-black cursor-pointer z-10 p-3 shadow-lg bottom-5 right-5`}
+      } fixed rounded-lg bg-black cursor-pointer z-10 p-3 shadow-lg bottom-5 max-lg:bottom-[100px] right-5`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

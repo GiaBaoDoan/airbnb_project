@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { AccountSchema } from "schema";
 import { RootState, useAppDispath } from "store";
 import styled from "styled-components";
-import moment from "moment";
 import { Input } from "components/Ui/Input";
 import {
   capNhatThongTinThunk,
@@ -17,12 +16,9 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getMyTrips } from "store/my-travel/thunk";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import { getAirbnbListThunk } from "store/quanLyAirbnb/thunk";
 import UserIcon from "components/Ui/icon/UserIcon";
 import LoadingPage from "components/Ui/LoadingPage";
-import { HuyChuyenThunk } from "store/huy-chuyen/thunk";
 const Account = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -33,7 +29,12 @@ const Account = () => {
     (state: RootState) => state.LayThongTinTinReducer
   );
   const { avatar } = useSelector((state: RootState) => state.UploadAnhReducer);
-  const { AirbnbList } = useSelector((state: RootState) => state.quanLyAirbnb);
+  const handeLogout = () => {
+    localStorage.removeItem("id");
+    localStorage.removeItem("token");
+    window.location.reload();
+    toast.success("Đã đăng xuất");
+  };
   const [editName, setEditName] = useState<boolean>(false);
   const [editEmail, setEditEmail] = useState<boolean>(false);
   const [editPhone, setEditPhone] = useState<boolean>(false);
@@ -42,15 +43,7 @@ const Account = () => {
   const inputRef = useRef<HTMLInputElement>();
   const id = localStorage.getItem("id");
   const dispatch = useAppDispath();
-  const huyChuyen = async (id: string) => {
-    dispatch(HuyChuyenThunk(id))
-      .unwrap()
-      .then(() => {
-        toast.success("Xóa thành công");
-        dispatch(getMyTrips(localStorage.getItem("id")));
-      })
-      .catch((err) => toast.error(err?.response?.data?.content));
-  };
+
   const handelFiles = async () => {
     let file = inputRef?.current?.files[0];
     if (file.type === ("image/jpeg" || "image/png" || "image/jpg")) {
@@ -62,9 +55,7 @@ const Account = () => {
     await dispatch(uploadAnhThunk(formData));
     dispatch(getThongTinUserThunk(id));
   };
-  const { myTrips } = useSelector(
-    (state: RootState) => state.getMyTripsReducer
-  );
+
   const modalRef = useRef<HTMLDialogElement>(null);
   const {
     handleSubmit,
@@ -125,7 +116,7 @@ const Account = () => {
   }, [ThongTinUser]);
   if (loadingUser) return <LoadingPage />;
   return (
-    <AccountCSS className="container py-12">
+    <AccountCSS className="w-[95%] max-sm:w-[90%] max-sm:py-5 py-12 mx-auto">
       {/* modal */}
       <dialog ref={modalRef} className="modal">
         <div className="modal-box space-y-5">
@@ -168,22 +159,22 @@ const Account = () => {
               ></path>
             </svg>
           </NavLink>
-          <div className="!font-600 text-lg">
-            <span>Tài Khoản {">"} </span>
+          <div className="!font-600 text-lg max-sm:text-base">
+            <span>Tài Khoản {"> "}</span>
             <span>Thông tin tài khoản</span>
           </div>
-          <h2 className="text-2xl mt-5 font-600 rounded-lg">
+          <h2 className="text-2xl mt-5 font-600 max-sm:text-lg rounded-lg">
             Thông tin cá nhân
           </h2>
         </article>
         <main className="grid lg:grid-cols-2 gap-11">
-          <section className="h-[600px] rounded-lg border p-5 w-full">
+          <section className="max-h-[600px] rounded-lg border p-5 w-full">
             <div className="flex flex-col items-center">
               {handelAvatar()}
               <button
                 type="button"
                 onClick={() => modalRef.current.showModal()}
-                className="underline-offset-1 text-lg mt-10 font-500 cursor-pointer underline"
+                className="underline-offset-1 text-lg max-sm:text-base mt-10 font-500 cursor-pointer underline"
               >
                 Cập nhật ảnh
               </button>
@@ -193,8 +184,10 @@ const Account = () => {
               <hr />
               <br />
               <div className="space-y-5 ">
-                <h2 className="text-lg font-600">Đã xác minh</h2>
-                <p className="text-lg space-x-3 flex items-center">
+                <h2 className="text-lg max-sm:text-base font-600">
+                  Đã xác minh
+                </h2>
+                <p className="text-lg max-sm:text-base space-x-3 flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -205,13 +198,13 @@ const Account = () => {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="lucide lucide-check"
+                    className="lucide lucide-check max-sm:w-3 max-sm:h-3"
                   >
                     <path d="M20 6 9 17l-5-5" />
                   </svg>
-                  <span> Địa chỉ email</span>
+                  <span className="max-sm:text-base">Địa chỉ email</span>
                 </p>
-                <p className="text-lg space-x-3 flex items-center">
+                <p className="text-lg max-sm:text-base space-x-3 flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -222,28 +215,13 @@ const Account = () => {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="lucide lucide-check"
+                    className="lucide lucide-check max-sm:w-3 max-sm:h-3"
                   >
                     <path d="M20 6 9 17l-5-5" />
                   </svg>
-                  <span>Thông tin được bảo mật</span>
-                </p>
-                <p className="space-x-3 flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-check"
-                  >
-                    <path d="M20 6 9 17l-5-5" />
-                  </svg>
-                  <span>Lịch sử chuyến đi cũng sẽ lưu lại</span>
+                  <span className="max-sm:text-base">
+                    Thông tin được bảo mật
+                  </span>
                 </p>
                 <p className="space-x-3 flex items-center">
                   <svg
@@ -256,30 +234,54 @@ const Account = () => {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="lucide lucide-check"
+                    className="lucide lucide-check max-sm:w-3 max-sm:h-3"
                   >
                     <path d="M20 6 9 17l-5-5" />
                   </svg>
-                  <span>
+                  <span className="max-sm:text-base">
+                    Lịch sử chuyến đi cũng sẽ lưu lại
+                  </span>
+                </p>
+                <p className="space-x-3 flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-check max-sm:w-3 max-sm:h-3"
+                  >
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                  <span className="max-sm:text-base">
                     Chúc bạn có chuyến đi vui vẻ cùng với gia đình {"<"}3
                   </span>
                 </p>
+                <button
+                  onClick={handeLogout}
+                  className="underline text-lg max-sm:text-base  font-500"
+                >
+                  Đăng xuất
+                </button>
               </div>
             </div>
           </section>
           <section>
             {/* name */}
             <section className="my-7 space-y-5">
-              <div className="flex max-tablet:flex-col space-y-5 justify-between">
+              <div className="flex  space-y-5 justify-between">
                 <div className="space-y-3">
-                  <p>Tên pháp lý</p>
+                  <p className="max-sm:text-base">Tên pháp lý</p>
                   <p className="name">
                     {editName
                       ? "Đây là tên trên giấy tờ thông hành của bạn, có thể là giấy phép hoặc hộ chiếu."
                       : `${ThongTinUser?.name}`}
                   </p>
                 </div>
-
                 <p className="edit" onClick={() => setEditName(!editName)}>
                   {editName ? "Hủy" : "Chỉnh sửa"}
                 </p>
@@ -297,9 +299,9 @@ const Account = () => {
             <hr />
             {/* email */}
             <section className="my-7 space-y-5">
-              <div className="flex max-tablet:flex-col space-y-5 justify-between">
+              <div className="flex  space-y-5 justify-between">
                 <div className="space-y-3">
-                  <p>Địa chỉ email</p>
+                  <p className="max-sm:text-base">Địa chỉ email</p>
                   <p className="name">
                     {editEmail
                       ? "Sử dụng địa chỉ email mà bạn luôn có quyền truy cập."
@@ -324,7 +326,7 @@ const Account = () => {
             <hr />
             {/* phone */}
             <section className="my-7 space-y-5">
-              <div className="flex max-tablet:flex-col space-y-5 justify-between">
+              <div className="flex  space-y-5 justify-between">
                 <div className="space-y-3">
                   <p>Số điện thoại</p>
                   <p className="name">
@@ -350,9 +352,9 @@ const Account = () => {
             <hr />
             {/* birthday */}
             <section className="my-7 space-y-5">
-              <div className="flex max-tablet:flex-col space-y-5 justify-between">
+              <div className="flex  space-y-5 justify-between">
                 <div className="space-y-3">
-                  <p>Ngày sinh</p>
+                  <p className="max-sm:text-base">Ngày sinh</p>
                   <p className="name">
                     {editBirth
                       ? "Thông tin ngày sinh"
@@ -377,9 +379,9 @@ const Account = () => {
             <hr />
             {/* gender */}
             <section className="my-7 space-y-5">
-              <div className="flex max-tablet:flex-col space-y-5 justify-between">
+              <div className="flex  space-y-5 justify-between">
                 <div className="space-y-3">
-                  <p>Giới tính</p>
+                  <p className="max-sm:text-base">Giới tính</p>
                   <p className="name">
                     {editGender
                       ? "Thông tin về giới tính."
@@ -414,7 +416,7 @@ const Account = () => {
             <button
               disabled={isLoading}
               type="submit"
-              className={`bg-black text-white p-3 font-500 rounded ${
+              className={`bg-black text-white p-3 max-sm:text-sm font-500 rounded ${
                 isLoading ? "bg-slate-300 cursor-no-drop" : ""
               }`}
             >
@@ -424,63 +426,6 @@ const Account = () => {
         </main>
       </form>
       {/* my trips */}
-      <section className="py-5">
-        {myTrips.length > 0 && (
-          <h2 className="text-2xl my-5 font-600">Chuyến đi của bạn</h2>
-        )}
-        <Swiper
-          navigation={true}
-          modules={[Navigation]}
-          slidesPerView={3}
-          spaceBetween={20}
-        >
-          {myTrips?.map((trip) => {
-            return (
-              <SwiperSlide key={trip.id}>
-                <section onClick={() => console.log(trip?.id)}>
-                  <div className="cursor-pointer overflow-hidden rounded-tl-xl rounded-tr-xl">
-                    <img
-                      className="h-[264px] hover:scale-110 transition-all object-cover"
-                      src={
-                        AirbnbList?.filter(
-                          (item) => item.id === trip.maPhong
-                        )[0]?.hinhAnh
-                      }
-                      alt=""
-                    />
-                  </div>
-                  <div className="border rounded-bl-xl rounded-br-xl p-5 y-7 space-y-5">
-                    <p className="!text-base">
-                      Số lượng người:{" "}
-                      <span className="font-600">
-                        {trip.soLuongKhach} người
-                      </span>
-                    </p>
-                    <p className="!text-base font-600">
-                      <span>Ngày đi</span>:{" "}
-                      <span className="font-600">
-                        {moment(trip.ngayDen).format("DD/MM/YYYY")} ~{" "}
-                        {moment(trip.ngayDi).format("DD/MM/YYYY")}
-                      </span>
-                    </p>
-                    <div className="flex justify-between">
-                      <button
-                        onClick={() => navigate(`/detail/${trip.maPhong}`)}
-                        className="underline font-600"
-                      >
-                        Xem chi tiết
-                      </button>
-                      <button onClick={() => huyChuyen(String(trip?.id))}>
-                        Hủy chuyến
-                      </button>
-                    </div>
-                  </div>
-                </section>
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-      </section>
     </AccountCSS>
   );
 };
@@ -526,14 +471,23 @@ const AccountCSS = styled.div`
     font-size: 18px;
     color: #717171;
     font-weight: 400;
+    @media only screen and (max-width: 640px) {
+      font-size: 16px;
+    }
   }
   .edit {
     cursor: pointer;
     text-decoration: underline;
+    @media only screen and (max-width: 640px) {
+      font-size: 16px;
+    }
   }
   .ant-picker .ant-picker-input > input {
-    font-size: 18px !important;
+    font-size: 18px;
     font-family: "Montserrat", sans-serif;
+    @media only screen and (max-width: 640px) {
+      font-size: 16px;
+    }
   }
   input,
   .datepicker,
@@ -547,5 +501,9 @@ const AccountCSS = styled.div`
     cursor: pointer;
     background-color: transparent;
     font-size: 18px;
+    @media only screen and (max-width: 640px) {
+      font-size: 16px;
+      padding: 10px;
+    }
   }
 `;

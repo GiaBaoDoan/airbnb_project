@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Footer from "../Ui/Footer";
 import styled from "styled-components";
 import BackToTop from "../Ui/BackToTop";
+import NavBottom from "components/Ui/NavBottom";
 const MainLayOut = () => {
   return (
     <CssContainer className="font-my-font relative">
@@ -10,6 +11,7 @@ const MainLayOut = () => {
       <Outlet />
       <Footer />
       <BackToTop />
+      <NavBottom />
     </CssContainer>
   );
 };

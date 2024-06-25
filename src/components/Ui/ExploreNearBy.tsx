@@ -18,13 +18,13 @@ const ExploreNearBy = () => {
     <CssContainer>
       <section className="py-12">
         <h3 className="text-2xl font-bold max-sm:text-xl ">Khám phá lân cận</h3>
-        <div className="grid grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-2 max-sm:grid-cols-1 max-sm:gap-3 gap-5 mt-5">
+        <div className="grid grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2  max-md:grid-cols-2 max-sm:grid-cols-1 max-sm:gap-3 gap-5 mt-5">
           {location?.map((i) => {
             return (
               <div
                 onClick={() => navigate(`/results/${i.id}`)}
                 key={i.id}
-                className="flex items-center max-md:space-y-3 max-md:items-start max-md:flex-col md:space-x-3 location cursor-pointer hover:bg-black/5 transition-all  rounded-lg"
+                className="flex items-center max-md:space-y-3 p-3 max-md:items-start max-md:flex-col md:space-x-3 location cursor-pointer hover:bg-black/5 transition-all  rounded-lg"
               >
                 <img
                   src={i.hinhAnh}
