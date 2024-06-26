@@ -55,7 +55,7 @@ const Login = () => {
           <div>
             <svg
               onClick={() => navigate("/")}
-              width="102"
+              width="110"
               className="text-[#FF385C] cursor-pointer"
               height="32"
               style={{ display: "block" }}
@@ -70,7 +70,7 @@ const Login = () => {
               ></path>
             </svg>
           </div>
-          <h2 className="text-2xl flex w-full justify-center text-[#00308F] font-600">
+          <h2 className="text-2xl max-sm:text-xl flex w-full justify-center text-[#00308F] font-600">
             Đăng nhập
           </h2>
         </div>
@@ -96,7 +96,7 @@ const Login = () => {
           <div className="flex justify-between w-full max-ip678Plus:justify-center items-center">
             <button
               disabled={isLoading}
-              className={`font-600 rounded text-lg p-3 w-full text-white ${
+              className={`font-600 rounded text-lg max-sm:text-base p-3 w-full text-white ${
                 isLoading ? "!bg-gray-300 cursor-no-drop" : "btn-submit"
               }`}
             >
@@ -106,18 +106,18 @@ const Login = () => {
           <div className="flex flex-col items-center space-y-5">
             <section className="border border-gray-400 flex justify-center rounded hover:bg-black/5 cursor-pointer w-full items-center space-x-3 p-3">
               <FaceBook />
-              <p className="font-600">Tiếp tục với facebook</p>
+              <p className="font-600 max-sm:text-sm">Tiếp tục với facebook</p>
             </section>
             <section className="border border-gray-400 rounded justify-center hover:bg-black/5 cursor-pointer flex w-full items-center space-x-3 p-3">
               <Google />
-              <p className="font-600">Tiếp tục với goole</p>
+              <p className="font-600 max-sm:text-sm">Tiếp tục với goole</p>
             </section>
             <section className="border border-gray-400 rounded justify-center hover:bg-black/5 cursor-pointer w-full flex items-center space-x-3 p-3">
               <Apple />
-              <p className="font-600">Tiếp tục với Apple</p>
+              <p className="font-600 max-sm:text-sm">Tiếp tục với Apple</p>
             </section>
           </div>
-          <div className="space-x-6 text-center">
+          <div className="space-x-6 text-center max-sm:text-sm">
             <span>Chưa có tài khoản?</span>
             <NavLink to={PATH.Register} className="text-mainColor font-500">
               Đăng kí ngay

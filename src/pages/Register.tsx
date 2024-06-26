@@ -81,7 +81,7 @@ const Register = () => {
                 ></path>
               </svg>
             </div>
-            <h2 className="text-2xl text-[#00308F] justify-center flex w-full items-center font-600">
+            <h2 className="text-2xl max-sm:text-xl text-[#00308F] justify-center flex w-full items-center font-600">
               Đăng ký
             </h2>
           </div>
@@ -111,7 +111,6 @@ const Register = () => {
                 type="text"
                 placeholder="Số điện thoại"
               />
-
               <Input
                 error={errors?.email?.message as string}
                 register={register}
@@ -167,13 +166,13 @@ const Register = () => {
               onClick={checkBirthday}
               type="submit"
               disabled={loading}
-              className={`font-600 rounded text-lg text-white w-full p-3 ${
+              className={`font-600 rounded max-sm:text-base text-lg text-white w-full p-3 ${
                 loading ? "!bg-gray-300 cursor-no-drop" : "btn-submit"
               }`}
             >
               <span>Tiếp tục</span>
             </button>
-            <div className="my-5 text-center">
+            <div className="my-5 text-center max-sm:text-sm">
               <span>Đã có tài khoản? </span>
               <NavLink
                 to={PATH.Login}
@@ -191,7 +190,10 @@ const Register = () => {
 const RegisterCSS = styled.div`
   input {
     font-family: "Montserrat";
-    padding: 13px;
+    padding: 12px;
+    @media only screen and (max-width: 640px) {
+      padding: 10px;
+    }
     &::placeholder {
       color: gray !important;
     }

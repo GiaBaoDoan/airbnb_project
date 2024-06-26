@@ -18,7 +18,7 @@ export const Input = ({
   value,
 }: InputProps) => {
   return (
-    <div className="w-full space-y-3">
+    <div className="w-full space-y-3 max-sm:space-y-6">
       <div>
         <input
           value={value}

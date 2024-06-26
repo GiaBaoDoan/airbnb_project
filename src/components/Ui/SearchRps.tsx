@@ -22,7 +22,7 @@ const SearchUiRps = () => {
     <section
       className={`relative lg:hidden cursor-pointer max-w-[400px] z-[100] transition-all`}
     >
-      <div className="font-500 border flex justify-between space-x-3 shadow hover:shadow-md transition-all pr-7 max-lg:text-sm  items-center rounded-full">
+      <div className="font-500 border flex justify-between space-x-3 shadow hover:shadow-md transition-all pr-5 max-lg:text-sm  items-center rounded-full">
         <div onClick={() => dispatch(setAction(true))} className="flex ">
           <div
             onClick={() => {

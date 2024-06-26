@@ -70,7 +70,7 @@ export const Header = () => {
           <div
             className={`flex ${
               open ? "h-[200px]" : "h-[100px]"
-            }  py-5 font-semibold items-center max-lg:!h-[100px] justify-between transition-all mx-auto w-[95%]`}
+            }  py-5 font-semibold items-center max-lg:!h-[100px] justify-between max-sm:space-x-3 transition-all mx-auto w-[95%]`}
           >
             <div className="max-sm:hidden">
               <LogoIcon />

@@ -28,6 +28,10 @@ const CssContainer = styled.div`
   justify-content: center;
   align-items: center;
   .btn-submit {
+    @media only screen and (max-width: 640px) {
+      font-size: 14px;
+      padding: 10px;
+    }
     background: radial-gradient(
       circle at left,
       #ff385c 0%,
@@ -40,10 +44,18 @@ const CssContainer = styled.div`
   }
   form {
     width: 600px;
-
+    height: 600px;
     background-color: #ffffff;
     border-radius: 10px;
-    padding: 35px;
+    padding: 30px;
+    @media only screen and (max-width: 640px) {
+      width: 450px;
+      padding: 20px 30px;
+    }
+    @media only screen and (max-width: 550px) {
+      width: 350px;
+      overflow-y: auto;
+    }
   }
   .overlay {
     content: "";
@@ -53,9 +65,6 @@ const CssContainer = styled.div`
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.2);
-  }
-  .logo {
-    width: 110px;
   }
   input {
     &::placeholder {
@@ -70,5 +79,9 @@ const CssContainer = styled.div`
     width: 100%;
     color: #2c3e50;
     font-size: 16px;
+    @media only screen and (max-width: 640px) {
+      font-size: 14px;
+      padding: 10px;
+    }
   }
 `;
