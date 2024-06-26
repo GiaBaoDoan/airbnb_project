@@ -30,7 +30,7 @@ const SearchUiRps = () => {
             }}
             className="p-3 hover:bg-black/5 px-7 rounded-tl-full rounded-bl-full"
           >
-            <p className="text-lg max-sm:text-base line-clamp-1">
+            <p className="text-lg max-sm:text-sm line-clamp-1">
               {address
                 ? `${address?.tenViTri}, ${address.tinhThanh}`
                 : "Tìm kiếm địa điểm cụ thể"}
@@ -42,7 +42,7 @@ const SearchUiRps = () => {
             dispatch(setAction(true));
             address && navigate(`/results/${address?.id}`);
           }}
-          className="bg-mainColor border-r flex items-centerjustify-center p-3 rounded-full"
+          className="bg-mainColor border-r flex items-center justify-center p-3 max-sm:p-8 rounded-full"
         >
           <SearchIcon />
         </div>

@@ -35,7 +35,7 @@ const SearchUi = () => {
   return (
     <section className={`cursor-pointer max-lg:hidden z-[100] transition-all`}>
       <div
-        className={`border flex  shadow pr-5 hover:shadow-md transition-all  items-center rounded-full ${
+        className={`border flex bg-white shadow pr-5 hover:shadow-md transition-all  items-center rounded-full ${
           open ? "scale-105 translate-y-[20px] " : ""
         }`}
       >
