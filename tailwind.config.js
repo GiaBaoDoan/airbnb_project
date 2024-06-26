@@ -64,6 +64,9 @@ export default {
         MaxDesk: "1800px",
         // => @media (min-width: 1280px) { ... }
       },
+      daisyui: {
+        darkTheme: "light",
+      },
     },
   },
   plugins: [require("daisyui")],
