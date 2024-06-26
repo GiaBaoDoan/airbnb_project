@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  daisyui: {
+    darkTheme: "light",
+  },
   theme: {
     fontFamily: {
       "my-font": "Open Sans, system-ui",
@@ -63,9 +66,6 @@ export default {
         mdDesk: "1500px",
         MaxDesk: "1800px",
         // => @media (min-width: 1280px) { ... }
-      },
-      daisyui: {
-        darkTheme: "light",
       },
     },
   },
