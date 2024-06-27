@@ -17,7 +17,6 @@ const IconsSwipper = () => {
         slidesPerView={4}
         breakpoints={{
           320: {
-            navigation: false,
             slidesPerView: 4,
           },
           768: {

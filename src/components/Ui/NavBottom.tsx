@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 const NavBottom = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  console.log(token);
   return (
     <CssConatiner>
-      <main className="lg:hidden z-10 fixed w-full p-5 border bg-gray-100 bottom-0 right-0">
+      <main className="lg:hidden z-10 fixed w-full p-5 max-sm:p-3 border bg-gray-100 bottom-0 right-0">
         <section className="flex justify-between">
           <div
             onClick={() => navigate("/")}
