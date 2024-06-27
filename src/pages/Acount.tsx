@@ -55,7 +55,6 @@ const Account = () => {
     await dispatch(uploadAnhThunk(formData));
     dispatch(getThongTinUserThunk(id));
   };
-
   const modalRef = useRef<HTMLDialogElement>(null);
   const {
     handleSubmit,
@@ -116,7 +115,7 @@ const Account = () => {
   }, [ThongTinUser]);
   if (loadingUser) return <LoadingPage />;
   return (
-    <AccountCSS className="w-[95%] max-sm:w-[90%] max-sm:py-5 py-12 mx-auto">
+    <AccountCSS className="w-[95%] max-md:w-[90%] max-sm:py-5 py-12 mx-auto">
       {/* modal */}
       <dialog ref={modalRef} className="modal">
         <div className="modal-box space-y-5">

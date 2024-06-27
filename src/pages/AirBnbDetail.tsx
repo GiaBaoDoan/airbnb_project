@@ -42,7 +42,7 @@ const AirBnbDetail = () => {
   }, []);
   if (detailRoomLoading) return <LoadingPage />;
   return (
-    <main className="pb-12 sm:pt-5 bg-white max-sm:w-[90%] w-[95%] mx-auto">
+    <main className="pb-12 sm:pt-5 bg-white max-md:w-[90%] w-[95%] mx-auto">
       <div className="pb-7">
         <article className="flex lg:justify-between items-center">
           <div className="flex-1">

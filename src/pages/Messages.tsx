@@ -1,6 +1,6 @@
 const Messages = () => {
   return (
-    <div className="w-[95%] max-sm:w-[90%] mx-auto space-y-5 py-12">
+    <div className="w-[95%] max-md:w-[90%] mx-auto space-y-5 py-12">
       <article className="flex items-center space-x-3">
         <h3 className="text-2xl max-sm:text-lg font-bold">
           Thông báo tin nhắn

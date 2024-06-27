@@ -70,7 +70,7 @@ export const Header = () => {
           <div
             className={`flex ${
               open ? "h-[200px]" : "h-[100px]"
-            }  py-5 font-semibold items-center max-lg:h-[100px] max-[400px]:h-[80px] justify-between max-sm:space-x-3 transition-all mx-auto w-[95%]`}
+            }  py-5 font-semibold items-center max-lg:h-[100px] max-[400px]:h-[80px] justify-between max-sm:space-x-3 transition-all mx-auto w-[95%] max-md:w-[90%]`}
           >
             <div className="max-sm:hidden">
               <LogoIcon />
@@ -143,7 +143,9 @@ export const Header = () => {
                         </span>
                       </li>
                       <li>
-                        <span>Chuyến đi</span>
+                        <span onClick={() => navigate("/my-trip")}>
+                          Chuyến đi
+                        </span>
                       </li>
                     </div>
                     <hr />
@@ -301,7 +303,6 @@ export const Header = () => {
                     } border px-5 py-3 rounded-xl font-500 text-sm`}
                   >
                     <span>{item?.text}</span>
-
                     <span>
                       {active.includes(item) && (
                         <svg

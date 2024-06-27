@@ -36,7 +36,7 @@ const ResultPage = () => {
   }, [id]);
   if (isPending) return <LoadingPage />;
   return (
-    <main className="w-[95%] max-sm:w-[90%] py-5  mx-auto">
+    <main className="w-[95%] max-md:w-[90%] py-5  mx-auto">
       {(roomByLocation.length && sortRoom.length) > 0 ? (
         <div className="space-y-5 max-sm:space-y-3">
           <div className="text-2xl max-sm:text-lg font-600">

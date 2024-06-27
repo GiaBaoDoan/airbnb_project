@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { getAirbnbListThunk } from "store/quanLyAirbnb/thunk";
 import { useNavigate } from "react-router-dom";
 import LoadingPage from "components/Ui/LoadingPage";
+import Swal from "sweetalert2";
 
 const MyTrip = () => {
   const navigate = useNavigate();
@@ -18,7 +19,6 @@ const MyTrip = () => {
     dispatch(HuyChuyenThunk(id))
       .unwrap()
       .then(() => {
-        toast.success("Xóa thành công");
         dispatch(getMyTrips(localStorage.getItem("id")));
       })
       .catch((err) => toast.error(err?.response?.data?.content));
@@ -34,8 +34,28 @@ const MyTrip = () => {
     }
   }, []);
   if (isLoading) return <LoadingPage />;
+  const deleteTrip = (id) => {
+    Swal.fire({
+      title: "Xác nhận hủy chuyến?",
+      text: "Khong thể hoàn lại được!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Xác nhận",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        huyChuyen(String(id));
+        Swal.fire({
+          title: "Đã hủy!",
+          text: "Chuyến đi đã được hủy.",
+          icon: "success",
+        });
+      }
+    });
+  };
   return myTrips.length > 0 ? (
-    <section className="pt-5 pb-12 space-y-5 max-sm:w-[90%] w-[95%] mx-auto">
+    <section className="pt-5 pb-12 space-y-5 w-[95%] max-md:w-[90%]  mx-auto">
       {myTrips.length > 0 && (
         <div className="space-y-3">
           <article className="flex items-center space-x-3">
@@ -118,7 +138,7 @@ const MyTrip = () => {
                     >
                       Xem chi tiết
                     </button>
-                    <button onClick={() => huyChuyen(String(trip?.id))}>
+                    <button onClick={() => deleteTrip(String(trip?.id))}>
                       Hủy chuyến
                     </button>
                   </div>
@@ -130,7 +150,7 @@ const MyTrip = () => {
       </Swiper>
     </section>
   ) : (
-    <div className="w-[95%] max-sm:w-[90%] mx-auto space-y-5 py-12">
+    <div className="w-[95%] max-md:w-[90%] mx-auto space-y-5 py-12">
       <article className="flex items-center space-x-3">
         <h3 className="text-2xl max-sm:text-lg font-bold">Chuyến đi</h3>
       </article>

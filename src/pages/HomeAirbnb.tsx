@@ -30,7 +30,7 @@ export const HomeAirbnb = () => {
   if (isFetchingAirbnb) return <LoadingPage />;
   return (
     <section className="pb-12 bg-white">
-      <div className="w-[95%] max-sm:w-[90%] mx-auto rounded-xl">
+      <div className="w-[95%] max-md:w-[90%] mx-auto rounded-xl">
         <article className="flex my-5 justify-between items-center">
           <h2 className="text-2xl font-bold max-sm:text-lg">
             AirBnb cung cấp trải nghiệm tốt nhất
@@ -38,7 +38,6 @@ export const HomeAirbnb = () => {
         </article>
         <ModelRoom modelRooms={sortRoom} />
         <ExploreNearBy />
-        {/* <BannerImage /> */}
         <section className="py-5">
           <h3 className="font-bold text-2xl max-sm:text-lg py-5">
             Sống ở bất kỳ đâu
