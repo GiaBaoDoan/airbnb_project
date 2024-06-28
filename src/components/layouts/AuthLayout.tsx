@@ -44,7 +44,6 @@ const CssContainer = styled.div`
   }
   form {
     width: 600px;
-    height: 600px;
     background-color: #ffffff;
     border-radius: 10px;
     padding: 30px;
@@ -54,7 +53,6 @@ const CssContainer = styled.div`
     }
     @media only screen and (max-width: 550px) {
       width: 350px;
-      overflow-y: auto;
     }
   }
   .overlay {

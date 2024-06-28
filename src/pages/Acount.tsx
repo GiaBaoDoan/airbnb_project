@@ -41,9 +41,9 @@ const Account = () => {
   const [editBirth, setEditBirth] = useState<boolean>(false);
   const [editGender, setEditGender] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>();
+  const [inputFile, setInputFile] = useState<string>("");
   const id = localStorage.getItem("id");
   const dispatch = useAppDispath();
-
   const handelFiles = async () => {
     let file = inputRef?.current?.files[0];
     if (file.type === ("image/jpeg" || "image/png" || "image/jpg")) {
@@ -54,6 +54,7 @@ const Account = () => {
     formData.append("formFile", file);
     await dispatch(uploadAnhThunk(formData));
     dispatch(getThongTinUserThunk(id));
+    setInputFile("");
   };
   const modalRef = useRef<HTMLDialogElement>(null);
   const {
@@ -126,13 +127,20 @@ const Account = () => {
             </button>
           </form>
           <h4 className="text-xl font-600">Thêm ảnh đại diện</h4>
-          <input ref={inputRef} type="file" />
+          <input
+            onChange={(e) => setInputFile(e.target.value)}
+            ref={inputRef}
+            type="file"
+          />
           <button
+            disabled={inputFile?.length < 0}
             onClick={async () => {
               await handelFiles();
               modalRef?.current.close();
             }}
-            className="bg-black text-white p-3 rounded"
+            className={` text-white bg-black p-3 rounded ${
+              !inputFile ? "bg-gray-300 cursor-no-drop" : "cursor-pointer"
+            }`}
           >
             Upload
           </button>
@@ -262,9 +270,27 @@ const Account = () => {
                 </p>
                 <button
                   onClick={handeLogout}
-                  className="underline text-lg max-sm:text-base  font-500"
+                  className="underline flex items-center space-x-6 text-lg max-sm:text-base  font-500"
                 >
-                  Đăng xuất
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-log-out"
+                    >
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                      <polyline points="16 17 21 12 16 7" />
+                      <line x1="21" x2="9" y1="12" y2="12" />
+                    </svg>
+                  </span>
+                  <span>Đăng xuất</span>
                 </button>
               </div>
             </div>
